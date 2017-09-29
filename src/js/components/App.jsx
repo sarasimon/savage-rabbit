@@ -7,7 +7,7 @@ import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../scss/style.scss';
 import Login from './Login';
-
+import Button from 'react-bootstrap/lib/Button';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -163,7 +163,7 @@ export default class App extends React.Component {
             value={this.state.duration}
           />
           <br />
-          <button onClick={this.handleShowAvailability} >Show</button>
+          <Button bsStyle="primary" onClick={this.handleShowAvailability} >Show</Button>
 
         </div>
       );
