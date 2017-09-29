@@ -6,6 +6,7 @@ import TimePicker from 'react-bootstrap-time-picker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../scss/style.scss';
+import Login from './Login';
 
 
 export default class App extends React.Component {
@@ -29,25 +30,14 @@ export default class App extends React.Component {
     this.handleTimeChange = this.handleTimeChange.bind(this);
     this.handleDurationChange = this.handleDurationChange.bind(this);
     this.handleShowAvailability = this.showAvailability.bind(this);
-    this.handleSingIn = this.onSignInClick.bind(this);
+    this.handlerToken = this.handlerToken.bind(this);
   }
 
-  onSignInClick() {
-    chrome.identity.getAuthToken({ interactive: true }, this.onSignInCallback.bind(this));
-  }
 
   onSignOutClick() {
     // not working
     // chrome.identity.launchWebAuthFlow({ url: 'https://accounts.google.com/logout' }, this.onSignOutCallback.bind(this));
     this.onSignOutCallback();
-  }
-
-  onSignInCallback(token) {
-    if (chrome.runtime.lastError) {
-      alert(chrome.runtime.lastError.message);
-      return;
-    }
-    this.setState({ signedIn: true, token });
   }
 
   onSignOutCallback() {
@@ -135,8 +125,14 @@ export default class App extends React.Component {
     this.state.slotDuration.set({ hour, minute: minutes, second: 0 });
   }
 
+  handlerToken(token) {
+    this.setState({
+      token,
+    });
+  }
+
   render() {
-    if (this.state.signedIn) {
+    if (this.state.token) {
       return (
         <div>
           <button onClick={this.handleSignOut} >Sign out</button>
@@ -173,7 +169,7 @@ export default class App extends React.Component {
       );
     }
     return (
-      <button onClick={this.handleSingIn} >Sign in with Google</button>
+      <Login onSuccess={this.handlerToken} />
     );
   }
 
