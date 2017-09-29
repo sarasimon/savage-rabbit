@@ -1,5 +1,13 @@
 # savage-rabbit
+
 Interviews scheduler!
+
+# Run the Application
+'''
+npm run build-dev
+'''
+
+# Google API Javascript Client
 
 We are not using google api javascript client because of...
 https://groups.google.com/forum/#!topic/google-api-javascript-client/LS5wPf4YO48
