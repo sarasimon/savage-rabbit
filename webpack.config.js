@@ -3,7 +3,13 @@ module.exports = {
 	module: {
 		rules: [
 		{ 
-			test: /\.js$/, 
+			enforce: "pre",
+			test: /\.jsx?$/, 
+			exclude: /node_modules/, 
+			loader: "eslint-loader"
+		},
+		{ 
+			test: /\.jsx?$/, 
 			exclude: /node_modules/, 
 			loader: "babel-loader",
 			query: {
@@ -18,7 +24,7 @@ module.exports = {
 	},
 
 	resolve: {
-		extensions: ['.js', '.json']
+		extensions: ['.js', '.json', '.jsx']
 	},
 
 	output: {
