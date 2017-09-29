@@ -41,14 +41,15 @@
     "webpack": "^3.6.0"
   },
   "dependencies": {
+    "bootstrap": "^4.0.0-beta",
     "moment": "^2.18.1",
     "prop-types": "^15.6.0",
-    "bootstrap": "^4.0.0-beta",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.3",
     "react-bootstrap-time-picker": "^1.0.3",
     "react-datepicker": "^0.55.0",
     "react-dom": "^15.6.1",
-    "react-moment": "^0.6.5"
+    "react-moment": "^0.6.5",
+    "superagent": "^3.6.1"
   }
 }
