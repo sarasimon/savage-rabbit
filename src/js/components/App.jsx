@@ -3,7 +3,6 @@ import Login from './Login';
 import InterviewSchedulerContainer from './InterviewSchedulerContainer';
 import '../../scss/style.scss';
 
-
 export default class App extends React.Component {
   constructor(props) {
     super(props);

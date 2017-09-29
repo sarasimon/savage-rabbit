@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import TimePicker from 'react-bootstrap-time-picker';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import Button from 'react-bootstrap/lib/Button';
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../scss/style.scss';
 
@@ -92,7 +93,7 @@ export default class FiltersComponent extends React.Component {
           value={this.state.duration}
         />
         <br />
-        <button onClick={this.handleOnClick} >Show</button>
+        <Button bsStyle="primary" onClick={this.handleOnClick} >Show</Button>
       </div>
     );
   }
