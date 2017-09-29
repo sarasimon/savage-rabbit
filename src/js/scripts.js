@@ -1,3 +1,4 @@
-require('superagent');
-require('react-datepicker');
-require('./index');
+require('superagent')
+require('react-datepicker')
+require('react-bootstrap')
+require('./index')
