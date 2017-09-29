@@ -24,11 +24,6 @@ export default class App extends React.Component {
       slotDuration: d };
 
 
-    funtion sum(a, b) {
-      this.acumulate = a + b + this.acumulate;
-    }.bind(this);
-
-
     this.handleSignOut = this.onSignOutClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleTimeChange = this.handleTimeChange.bind(this);
