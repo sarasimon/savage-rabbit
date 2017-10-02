@@ -21,12 +21,12 @@ export default class App extends React.Component {
   }
 
   render() {
-    if (this.state.token) {
-      return (
-        <InterviewSchedulerContainer
-          token={this.state.token}
-        />);
-    }
-    return (<Login onSuccess={this.handlerToken} />);
+    return (
+      <div className="app">
+        <h1 className="title">Savage Rabbit</h1>
+        { this.state.token ?
+          <InterviewSchedulerContainer token={this.state.token} /> :
+          <Login onSuccess={this.handlerToken} /> }
+      </div>);
   }
 }
