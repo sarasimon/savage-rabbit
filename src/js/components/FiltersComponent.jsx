@@ -66,7 +66,7 @@ export default class FiltersComponent extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="filters-component">
         <label htmlFor="date-picker">Interview Date</label>
         <DatePicker
           selected={this.state.interviewDate}

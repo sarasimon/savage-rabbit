@@ -17,3 +17,20 @@ body {
   width: 100%;
   justify-content: center;
 }
+
+.filters-component{
+  display:flex;
+  flex-direction:column;
+  width:100%;
+  justify-content:center;
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
+  .react-datepicker__input-container {
+    width: 100%;
+    input {
+      width: 100%;
+    }
+  }
+}
