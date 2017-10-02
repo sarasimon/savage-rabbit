@@ -1,8 +1,15 @@
 @import "~bootstrap/scss/bootstrap.scss";
-body{
+body {
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
   margin-top:10%;
+}
+
+.app {
+
+  .title {
+    margin: 30px;
+  }
 }
