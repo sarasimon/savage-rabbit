@@ -5,6 +5,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/lib/Button';
 import 'react-datepicker/dist/react-datepicker.css';
+import config from '../config';
 import '../../scss/style.scss';
 
 const convertToTime = (seconds) => {
@@ -22,16 +23,12 @@ export default class FiltersComponent extends React.Component {
   constructor(props) {
     super(props);
 
-    const workingDayStart = moment().set({ hour: 9, minute: 0, second: 0 });
-    const workingDayEnd = moment().set({ hour: 18, minute: 0, second: 0 });
-    const interviewDuration = moment().set({ hour: 1, minute: 0, second: 0 });
-
     this.state = {
-      workingDayStart,
-      workingDayEnd,
-      interviewDuration,
+      workingDayStart: config.defaultDayStart,
+      workingDayEnd: config.defaultDayEnd,
+      interviewDuration: config.defaultInterviewDuration,
+      people: config.people,
       interviewDate: moment(),
-      people: ['evulpe@thoughtworks.com', 'ssimon@thoughtworks.com'],
     };
 
     this.handleDateChange = this.handleDateChange.bind(this);
