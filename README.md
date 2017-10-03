@@ -3,9 +3,15 @@
 Interviews scheduler!
 
 # Run the Application
-'''
+```
 npm run build-dev
-'''
+```
+
+# Run the tests
+
+```
+npm test
+```
 
 # Google API Javascript Client
 
