@@ -41,7 +41,7 @@ const processRequest = (events, start, end, duration) => {
 };
 
 const requestAvailability = (token, workingDayStart, workingDayEnd,
-  interviewDuration, listOfEmails, callback) => {
+  interviewDuration, listOfEmails) => {
   const promises = listOfEmails.map((email) => {
     const url = `https://www.googleapis.com/calendar/v3/calendars/${email}/events`;
 
@@ -69,7 +69,7 @@ const requestAvailability = (token, workingDayStart, workingDayEnd,
     });
   });
 
-  Promise.all(promises).then(callback);
+  return Promise.all(promises);
 };
 
 export default requestAvailability;
