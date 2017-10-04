@@ -21,7 +21,10 @@ export default class Login extends React.Component {
   }
 
   render() {
-    return (<Button bsStyle="primary" className="login" onClick={this.onSignInClick} >Sign in with Google</Button>);
+    return (
+      <Button bsStyle="primary" className="login" onClick={this.onSignInClick}>
+        Sign in with Google
+      </Button>);
   }
 }
 

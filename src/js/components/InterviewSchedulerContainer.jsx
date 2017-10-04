@@ -23,10 +23,6 @@ export default class InterviewSchedulerContainer extends React.Component {
 
     requestAvailability(token, workingDayStart, workingDayEnd, interviewDuration, listOfEmails,
       (results, error) => {
-
-        // fill the tables
-
-        
         console.log(results, error);
       });
   }
