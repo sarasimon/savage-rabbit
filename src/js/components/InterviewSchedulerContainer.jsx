@@ -23,16 +23,31 @@ export default class InterviewSchedulerContainer extends React.Component {
 
     requestAvailability(token, workingDayStart, workingDayEnd, interviewDuration, listOfEmails,
       (results, error) => {
-        console.log(results, error);
-      });
+        var {email, data} = results[0];
+        console.log(email);
+      }
+      );
   }
 
   render() {
+    var columns = undefined;
+    var rows = undefined;
+
     return (
       <div>
-        <FiltersComponent onSearch={this.handlerSearch} />
+      <FiltersComponent onSearch={this.handlerSearch} />
+      <table className={this.props.className}>
+       <thead>
+        <tr>
+         ["1", "2", "3"]
+        </tr>
+       </thead>
+       <tbody>
+        ["a", "b", "c"]
+       </tbody>
+      </table>
       </div>
-    );
+      );
   }
 }
 
