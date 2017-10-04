@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import 'react-datepicker/dist/react-datepicker.css';
-import requestAvailability from './CalendarService';
+import requestAvailability from '../services/CalendarService';
+import requestEmails from '../services/SpreadsheetService';
 import '../../scss/style.scss';
 import FiltersComponent from './FiltersComponent';
-import config from '../config';
 
 
 export default class InterviewSchedulerContainer extends React.Component {
@@ -19,14 +19,13 @@ export default class InterviewSchedulerContainer extends React.Component {
     const workingDayStart = filterState.workingDayStart;
     const workingDayEnd = filterState.workingDayEnd;
     const interviewDuration = filterState.interviewDuration;
-    const listOfEmails = config.people;
 
-    requestAvailability(token, workingDayStart, workingDayEnd, interviewDuration, listOfEmails,
-      (results, error) => {
-        var {email, data} = results[0];
-        console.log(email);
-      }
-      );
+    requestEmails(token, '1Jp4nE1XQWBns_U11LKXN5FvBwBrWfVmJfLKOAKaxVTM', 'A1:A9')
+      .then(listOfEmails =>
+        requestAvailability(token, workingDayStart, workingDayEnd, interviewDuration, listOfEmails))
+      .then((freeSlots) => {
+        console.log('Free slots', freeSlots);
+      });
   }
 
   render() {
