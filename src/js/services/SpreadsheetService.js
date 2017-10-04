@@ -1,8 +1,14 @@
 import request from 'superagent';
+import validator from 'email-validator';
 
 const processRequest = (res) => {
   const emails = res.body.values;
-  return emails;
+  return emails.filter((email) => {
+    if (validator.validate(email)) {
+      return true;
+    }
+    return false;
+  });
 };
 
 const requestEmails = (token, spreadsheetId, range) => {

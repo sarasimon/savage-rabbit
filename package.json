@@ -52,6 +52,7 @@
     "react-datepicker": "^0.55.0",
     "react-dom": "^15.6.1",
     "react-moment": "^0.6.5",
-    "superagent": "^3.6.1"
+    "superagent": "^3.6.1",
+    "email-validator": "^1.1.1"
   }
 }
