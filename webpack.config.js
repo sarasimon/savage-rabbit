@@ -25,6 +25,6 @@ module.exports = {
 	},
 
 	output: {
-		filename: './src/bundle.js'
+		filename: './dist/bundle.js'
 	},
 }

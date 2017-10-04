@@ -58,5 +58,5 @@ typings/
 .env
 
 # own files
-src/bundle.js
+dist/bundle.js
 **/.DS_Store

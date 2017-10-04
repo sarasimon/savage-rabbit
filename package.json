@@ -38,21 +38,22 @@
     "node-sass": "^4.5.3",
     "nodemon": "^1.12.1",
     "rc-time-picker": "^2.4.1",
+    "react-test-renderer": "^16.0.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
     "webpack": "^3.6.0"
   },
   "dependencies": {
     "bootstrap": "^4.0.0-beta",
+    "email-validator": "^1.1.1",
     "moment": "^2.18.1",
     "prop-types": "^15.6.0",
-    "react": "^15.6.1",
+    "react": "^16.0.0",
     "react-bootstrap": "^0.31.3",
     "react-bootstrap-time-picker": "^1.0.3",
     "react-datepicker": "^0.55.0",
-    "react-dom": "^15.6.1",
+    "react-dom": "^16.0.0",
     "react-moment": "^0.6.5",
-    "superagent": "^3.6.1",
-    "email-validator": "^1.1.1"
+    "superagent": "^3.6.1"
   }
 }
