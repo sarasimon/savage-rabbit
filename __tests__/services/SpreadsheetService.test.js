@@ -11,13 +11,12 @@ describe('SpreadsheetService', () => {
   };
 
   beforeEach(() => {
-    // Set up some mocked out file info before each test
     require('superagent').__setMockResponse(RESPONSE);
   });
 
   test('test basic success response', () => {
     requestEmails('token', 'spreadsheetId', 'A1:A99').then((result) => {
-      expect(result).arrayContaining(['jcoscol@thoughtworks.com']);
+      expect(result).toEqual(['jcoscol@thoughtworks.com']);
     });
   });
 });
