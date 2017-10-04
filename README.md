@@ -13,6 +13,12 @@ npm run build-dev
 npm test
 ```
 
+or 
+
+```
+npm run test:watch
+```
+
 # Google API Javascript Client
 
 We are not using google api javascript client because of...
