@@ -41,36 +41,41 @@ const processRequest = (events, start, end, duration) => {
   return slots;
 };
 
-const requestAvailability = (token, workingDayStart, workingDayEnd,
-  interviewDuration, listOfEmails) => {
-  const promises = listOfEmails.map((email) => {
-    const url = `https://www.googleapis.com/calendar/v3/calendars/${email}/events`;
+const requestSingleAvailability = (token, workingDayStart, workingDayEnd,
+  interviewDuration, email) => {
+  const url = `https://www.googleapis.com/calendar/v3/calendars/${email}/events`;
 
-    const start = workingDayStart.toISOString();
-    const end = workingDayEnd.toISOString();
+  const start = workingDayStart.toISOString();
+  const end = workingDayEnd.toISOString();
 
-    return new Promise((resolve, reject) => {
-      request
-        .get(url)
-        .set('Authorization', `Bearer ${token}`)
-        .query({ singleEvents: 'true' })
-        .query({ orderBy: 'startTime' })
-        .query({ timeMin: start })
-        .query({ timeMax: end })
-        .end((err, res) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve({
-              email,
-              data: processRequest(res.body.items, start, end, interviewDuration, email),
-            });
-          }
-        });
-    });
+  return new Promise((resolve, reject) => {
+    request
+      .get(url)
+      .set('Authorization', `Bearer ${token}`)
+      .query({ singleEvents: 'true' })
+      .query({ orderBy: 'startTime' })
+      .query({ timeMin: start })
+      .query({ timeMax: end })
+      .end((err, res) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve({
+            email,
+            data: processRequest(res.body.items, start, end, interviewDuration, email),
+          });
+        }
+      });
   });
-
-  return Promise.all(promises);
 };
 
-export default requestAvailability;
+const requestAvailability = ((token, workingDayStart, workingDayEnd,
+  interviewDuration, listOfEmails) => {
+  const promises = listOfEmails.map(email =>
+    requestSingleAvailability(token, workingDayStart, workingDayEnd,
+      interviewDuration, email));
+  return Promise.all(promises);
+});
+
+
+export default requestSingleAvailability;

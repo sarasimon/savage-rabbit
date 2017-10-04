@@ -2,7 +2,7 @@ import request from 'superagent';
 import validator from 'email-validator';
 
 const processRequest = (res) => {
-  const emails = res.body.values;
+  const emails = res.body.values[0];
   return emails.filter((email) => {
     if (validator.validate(email)) {
       return true;
