@@ -1,4 +1,4 @@
-class Converter {
+export default class Converter {
 
 	constructor(time) {
 		this.time = time;
@@ -13,11 +13,11 @@ class Converter {
 	}
 
 	calcHours(){
-		return Math.floor(duration/3600);
+		return Math.floor(this.time/3600);
 	}
 
 	calcMins(){
-		return (duration - this.hour*3600) / 60;
+		return (this.time - this.hour*3600) / 60;
 	}
 
 	
