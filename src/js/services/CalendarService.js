@@ -1,13 +1,13 @@
 import request from 'superagent';
 import moment from 'moment';
 
-
 const isAvailableSlot = (slotStart, nextEvent, interviewDuration) => {
   const slotDuration = nextEvent - slotStart;
   const miliSecondsMargin = 1000;
   const hoursToMinutes = 60;
-  const minutesToMiliSeconds = 60*1000;
-  const duration = (interviewDuration.minute() + interviewDuration.hour()*hoursToMinutes)*minutesToMiliSeconds;
+  const minutesToMiliSeconds = 60 * 1000;
+  const currentHourInMinutes = interviewDuration.hour() * hoursToMinutes;
+  const duration = (interviewDuration.minute() + currentHourInMinutes) * minutesToMiliSeconds;
 
   return (moment(slotStart).isBefore(nextEvent) &&
    (slotDuration + miliSecondsMargin >= duration));
@@ -51,22 +51,22 @@ const requestAvailability = (token, workingDayStart, workingDayEnd,
 
     return new Promise((resolve, reject) => {
       request
-      .get(url)
-      .set('Authorization', `Bearer ${token}`)
-      .query({ singleEvents: 'true' })
-      .query({ orderBy: 'startTime' })
-      .query({ timeMin: start })
-      .query({ timeMax: end })
-      .end((err, res) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve({
-            email,
-            data: processRequest(res.body.items, start, end, interviewDuration, email),
-          });
-        }
-      });
+        .get(url)
+        .set('Authorization', `Bearer ${token}`)
+        .query({ singleEvents: 'true' })
+        .query({ orderBy: 'startTime' })
+        .query({ timeMin: start })
+        .query({ timeMax: end })
+        .end((err, res) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve({
+              email,
+              data: processRequest(res.body.items, start, end, interviewDuration, email),
+            });
+          }
+        });
     });
   });
 

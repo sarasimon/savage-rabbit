@@ -29,24 +29,11 @@ export default class InterviewSchedulerContainer extends React.Component {
   }
 
   render() {
-    var columns = undefined;
-    var rows = undefined;
-
     return (
       <div>
-      <FiltersComponent onSearch={this.handlerSearch} />
-      <table className={this.props.className}>
-       <thead>
-        <tr>
-         ["1", "2", "3"]
-        </tr>
-       </thead>
-       <tbody>
-        ["a", "b", "c"]
-       </tbody>
-      </table>
+        <FiltersComponent onSearch={this.handlerSearch} />
       </div>
-      );
+    );
   }
 }
 
