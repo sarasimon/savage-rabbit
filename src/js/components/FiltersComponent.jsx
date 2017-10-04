@@ -27,7 +27,6 @@ export default class FiltersComponent extends React.Component {
       workingDayStart: config.defaultDayStart,
       workingDayEnd: config.defaultDayEnd,
       interviewDuration: config.defaultInterviewDuration,
-      people: config.people,
       interviewDate: moment(),
     };
 

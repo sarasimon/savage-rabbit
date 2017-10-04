@@ -13,7 +13,6 @@ export default class App extends React.Component {
     this.handlerToken = this.handlerToken.bind(this);
   }
 
-
   handlerToken(token) {
     this.setState({
       token,
