@@ -1,2 +1,36 @@
+@import "~bootstrap/scss/bootstrap.scss";
 body {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  margin-top:10%;
+}
+
+.app {
+  .title {
+    margin: 30px;
+  }
+}
+
+.login {
+  width: 100%;
+  justify-content: center;
+}
+
+.filters-component{
+  display:flex;
+  flex-direction:column;
+  width:100%;
+  justify-content:center;
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
+  .react-datepicker__input-container {
+    width: 100%;
+    input {
+      width: 100%;
+    }
+  }
 }

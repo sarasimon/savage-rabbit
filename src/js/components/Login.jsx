@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Button from 'react-bootstrap/lib/Button';
 
-// <button onClick={this.handleSingIn} >Sign in with Google</button>
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -21,7 +21,7 @@ export default class Login extends React.Component {
   }
 
   render() {
-    return (<button onClick={this.onSignInClick} >Sign in with Google</button>);
+    return (<Button bsStyle="primary" className="login" onClick={this.onSignInClick} >Sign in with Google</Button>);
   }
 }
 
