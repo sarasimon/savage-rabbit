@@ -57,3 +57,6 @@ ResultsComponent.propTypes = {
     end: PropTypes.number,
   })).isRequired,
 };
+
+
+export default ResultsComponent;
