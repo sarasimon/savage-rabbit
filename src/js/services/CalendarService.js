@@ -62,7 +62,7 @@ const requestSingleAvailability = (token, workingDayStart, workingDayEnd,
         } else {
           resolve({
             email,
-            data: processRequest(res.body.items, start, end, interviewDuration, email),
+            data: processRequest(res.body.items, start, end, interviewDuration),
           });
         }
       });
@@ -77,5 +77,4 @@ const requestAvailability = ((token, workingDayStart, workingDayEnd,
   return Promise.all(promises);
 });
 
-
-export default requestSingleAvailability;
+export default { requestAvailability, requestSingleAvailability };
