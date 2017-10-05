@@ -1,8 +1,10 @@
 import request from 'superagent';
 import validator from 'email-validator';
+import _ from 'lodash';
 
 const processRequest = (res) => {
-  const emails = res.body.values[0];
+  const emails = _.flatten(res.body.values);
+
   return emails.filter((email) => {
     if (validator.validate(email)) {
       return true;

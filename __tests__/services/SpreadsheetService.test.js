@@ -13,9 +13,9 @@ describe('SpreadsheetService', () => {
   const EMPTY_CELL_RESPONSE = {
     body: {
       values: [
-        'jcoscol@thoughtworks.com',
-        '',
-        'evulpe@thoughtworks.com',
+        ['jcoscol@thoughtworks.com'],
+        [''],
+        ['evulpe@thoughtworks.com'],
       ],
     },
   };
@@ -23,8 +23,8 @@ describe('SpreadsheetService', () => {
   const INVALID_EMAIL_RESPONSE = {
     body: {
       values: [
-        'evulpethoughtworks.com',
-        'evulpe@thoughtworks.com',
+        ['evulpethoughtworks.com'],
+        ['evulpe@thoughtworks.com'],
       ],
     },
   };
