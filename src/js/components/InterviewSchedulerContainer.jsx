@@ -5,6 +5,7 @@ import CalendarService from '../services/CalendarService';
 import requestEmails from '../services/SpreadsheetService';
 import '../../scss/style.scss';
 import FiltersComponent from './FiltersComponent';
+import ResultsComponent from './ResultsComponent';
 
 
 export default class InterviewSchedulerContainer extends React.Component {
@@ -12,6 +13,9 @@ export default class InterviewSchedulerContainer extends React.Component {
     super(props);
 
     this.handlerSearch = this.handlerSearch.bind(this);
+    this.state = {
+      slots: [],
+    };
   }
 
   handlerSearch(filterState) {
@@ -27,7 +31,9 @@ export default class InterviewSchedulerContainer extends React.Component {
           interviewDuration,
           listOfEmails))
       .then((freeSlots) => {
-        console.log('Free slots', freeSlots);
+        this.setState({
+          slots: freeSlots,
+        });
       });
   }
 
@@ -35,6 +41,7 @@ export default class InterviewSchedulerContainer extends React.Component {
     return (
       <div>
         <FiltersComponent onSearch={this.handlerSearch} />
+        <ResultsComponent data={this.state.slots} />
       </div>
     );
   }
