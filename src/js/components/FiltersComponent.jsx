@@ -7,17 +7,7 @@ import Button from 'react-bootstrap/lib/Button';
 import 'react-datepicker/dist/react-datepicker';
 import config from '../config';
 import '../../scss/style.scss';
-
-const convertToTime = (seconds) => {
-  const hour = Math.floor(seconds / 3600);
-  const minute = (seconds - (hour * 3600)) / 60;
-
-  return {
-    hour,
-    minute,
-    second: 0,
-  };
-};
+import convertToTime from '../utils.js';
 
 export default class FiltersComponent extends React.Component {
   constructor(props) {
