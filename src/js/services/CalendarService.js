@@ -72,10 +72,9 @@ const requestSingleAvailability = (token, workingDayStart, workingDayEnd,
 const requestAvailability = ((token, workingDayStart, workingDayEnd,
   interviewDuration, listOfEmails) => {
   const promises = listOfEmails.map(email =>
-    requestSingleAvailability(token, workingDayStart, workingDayEnd,
-      interviewDuration, email));
+    requestSingleAvailability(token, workingDayStart, workingDayEnd, interviewDuration, email));
   return Promise.all(promises);
 });
 
 
-export default requestSingleAvailability;
+export default requestAvailability;
