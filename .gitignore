@@ -59,4 +59,5 @@ typings/
 
 # own files
 dist/bundle.js
+src/bundle.js
 **/.DS_Store

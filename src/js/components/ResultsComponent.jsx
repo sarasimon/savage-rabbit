@@ -46,6 +46,8 @@ const ResultsComponent = (props) => {
       items={items}
       defaultTimeStart={moment().add(-12, 'hour')}
       defaultTimeEnd={moment().add(12, 'hour')}
+      canMove={false}
+      maxZoom={30 * 86400 * 1000}
     />
   );
 };
