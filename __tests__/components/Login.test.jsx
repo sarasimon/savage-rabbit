@@ -1,14 +1,4 @@
-global.chrome = {
-  runtime: {
-    lastError: false,
-  },
 
-  identity: {
-    getAuthToken: (configuration, callback) => {
-      callback('TOKEN_ID');
-    },
-  },
-};
 
 import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
@@ -21,7 +11,18 @@ configure({ adapter: new Adapter() });
 
 
 describe('Login', () => {
-  test('test basic login', () => {
+  test('test login on success', () => {
+    global.chrome = {
+      runtime: {
+        lastError: false,
+      },
+
+      identity: {
+        getAuthToken: (configuration, callback) => {
+          callback('TOKEN_ID');
+        },
+      },
+    };
     const onSuccess = (token) => {
       expect(token).toBe('TOKEN_ID');
     };
@@ -31,4 +32,30 @@ describe('Login', () => {
     wrapper.find('Button').simulate('click');
     expect(wrapper.state().token).toBe('TOKEN_ID');
   });
+    
+  test('test login on error', () => {
+      
+    global.chrome = {
+      runtime: {
+        lastError: true,
+        lastError: {
+          message: 'error'
+        }
+      },
+
+      identity: {
+        getAuthToken: (configuration, callback) => {
+          callback('TOKEN_ID');
+        },
+      },
+    };  
+    const onSuccess = (token) => {
+      expect(token).toBe('TOKEN_ID');
+    };
+
+    const wrapper = shallow(<Login onSuccess={onSuccess}/>);
+    expect(wrapper.state().token).toBe(undefined);
+    wrapper.find('Button').simulate('click');
+    expect(wrapper.state().token).toBe(undefined);
+  });    
 });

@@ -70,7 +70,7 @@
       "node_modules/enzyme/"
     ],
     "moduleNameMapper": {
-      "\\.(s?css)$": "<rootDir>/node_modules/jest-css-modules"
+      "\\.(s?css)$": "identity-obj-proxy"
     },
     "setupFiles": [
       "<rootDir>/jest/shim.js",
