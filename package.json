@@ -28,6 +28,7 @@
     "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^0.28.7",
     "enzyme": "^3.1.0",
+    "enzyme-adapter-react-15": "^1.0.1",
     "enzyme-adapter-react-16": "^1.0.1",
     "eslint": "^4.7.2",
     "eslint-config-airbnb": "^15.1.0",
@@ -35,6 +36,7 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.4.0",
+    "identity-obj-proxy": "^3.0.0",
     "input-moment": "^0.3.6",
     "install": "^0.10.1",
     "jest": "^21.2.1",
@@ -65,6 +67,9 @@
     "unmockedModulePathPatterns": [
       "node_modules/react/",
       "node_modules/enzyme/"
-    ]
+    ],
+    "moduleNameMapper": {
+      "\\.(scss|less)$": "identity-obj-proxy"
+    }
   }
 }

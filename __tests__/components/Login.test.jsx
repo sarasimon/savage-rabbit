@@ -1,4 +1,4 @@
-window.chrome = {
+global.chrome = {
   runtime: {
     lastError: false,
   },
@@ -11,23 +11,24 @@ window.chrome = {
 };
 
 import React from 'react';
+import Adapter from 'enzyme-adapter-react-16';
+import {shallow} from 'enzyme';
+import { configure } from 'enzyme';
 import renderer from 'react-test-renderer';
 import Login from '../../src/js/components/Login';
 
+configure({ adapter: new Adapter() });
+
 
 describe('Login', () => {
-  test('test basic login', (done) => {
+  test('test basic login', () => {
     const onSuccess = (token) => {
       expect(token).toBe('TOKEN_ID');
-      done();
     };
 
-    const component = renderer.create(
-      <Login onSuccess={onSuccess} />,
-    );
-
-    let tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
-    tree.props.onClick();
+    const wrapper = shallow(<Login onSuccess={onSuccess}/>);
+    expect(wrapper.state().token).toBe(undefined);
+    wrapper.find('Button').simulate('click');
+    expect(wrapper.state().token).toBe('TOKEN_ID');
   });
 });
