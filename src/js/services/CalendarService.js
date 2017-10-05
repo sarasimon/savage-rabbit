@@ -42,7 +42,7 @@ const processRequest = (events, start, end, duration) => {
 };
 
 const requestSingleAvailability = (token, workingDayStart, workingDayEnd,
-  interviewDuration, email) => {
+  interviewDuration, email, processRequestFunct) => {
   const url = `https://www.googleapis.com/calendar/v3/calendars/${email}/events`;
 
   const start = workingDayStart.toISOString();
@@ -62,7 +62,7 @@ const requestSingleAvailability = (token, workingDayStart, workingDayEnd,
         } else {
           resolve({
             email,
-            data: processRequest(res.body.items, start, end, interviewDuration),
+            data: processRequestFunct(res.body.items, start, end, interviewDuration),
           });
         }
       });
@@ -72,7 +72,7 @@ const requestSingleAvailability = (token, workingDayStart, workingDayEnd,
 const requestAvailability = ((token, workingDayStart, workingDayEnd,
   interviewDuration, listOfEmails) => {
   const promises = listOfEmails.map(email =>
-    requestSingleAvailability(token, workingDayStart, workingDayEnd, interviewDuration, email));
+    requestSingleAvailability(token, workingDayStart, workingDayEnd, interviewDuration, email, processRequest));
   return Promise.all(promises);
 });
 

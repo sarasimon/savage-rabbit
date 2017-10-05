@@ -4,7 +4,7 @@ import TimePicker from 'react-bootstrap-time-picker';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/lib/Button';
-import 'react-datepicker/dist/react-datepicker.css';
+import 'react-datepicker/dist/react-datepicker.js';
 import config from '../config';
 import '../../scss/style.scss';
 
