@@ -41,13 +41,19 @@ const preprocessData = (data) => {
 
 const ResultsComponent = (props) => {
   const { items, groups } = preprocessData(props.data);
+  if (items.length === 0) {
+    return (<div> No results ... </div>);
+  }
+
+  const startTime = _.minBy(items, item => item.start_time).start_time;
+  const endTime = _.maxBy(items, item => item.end_time).end_time;
 
   return (
     <Timeline
       groups={groups}
       items={items}
-      defaultTimeStart={moment().add(-12, 'hour')}
-      defaultTimeEnd={moment().add(12, 'hour')}
+      visibleTimeStart={startTime}
+      visibleTimeEnd={endTime}
       canMove={false}
       maxZoom={86400 * 1000}
     />
