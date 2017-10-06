@@ -33,17 +33,24 @@ export default class InterviewSchedulerContainer extends React.Component {
     const interviewDuration = filterState.interviewDuration;
     const skill = filterState.skill;
     const level = filterState.level;
+    let people = [];
 
     requestEmails(token, config.sheetId, skill, level)
-      .then(listOfEmails =>
-        CalendarService.requestAvailability(token,
+      .then(listOfPeople => {
+        people = listOfPeople;
+        return CalendarService.requestAvailability(token,
           workingDayStart,
           workingDayEnd,
           interviewDuration,
-          listOfEmails))
+          listOfPeople.map(item => item.email));
+      })
       .then((freeSlots) => {
+        let merged = _.map(people, function(item) {
+          return _.assign(item, _.find(freeSlots, ['email', item.email]));
+        });
+        merged = _.reverse(_.sortBy(merged, ['level']));
         this.setState({
-          slots: freeSlots,
+          slots: merged,
         });
       });
   }

@@ -6,11 +6,16 @@ const processRequest = (rows, skill, level) => {
   const headers = rows[0];
   const indexOfSkill = headers.indexOf(skill);
   const indexOfEmail = headers.indexOf('Email');
-
+  const indexOfName = headers.indexOf('Name');
+    
   return rows
     .filter(row => row[indexOfSkill] >= level || !skill)
     .filter(row => validator.validate(row[indexOfEmail]))
-    .map(row => row[indexOfEmail]);
+    .map(row => ({
+      email: row[indexOfEmail],
+      name: row[indexOfName], 
+      level: row[indexOfSkill]
+    }));
 };
 
 const requestEmails = (token, spreadsheetId, skill, level) => {
@@ -25,8 +30,8 @@ const requestEmails = (token, spreadsheetId, skill, level) => {
         if (err) {
           reject(err);
         } else {
-          const listOfEmails = processRequest(res.body.values, skill, level);
-          resolve(listOfEmails);
+          const listOfPeople = processRequest(res.body.values, skill, level);
+          resolve(listOfPeople);
         }
       });
   });

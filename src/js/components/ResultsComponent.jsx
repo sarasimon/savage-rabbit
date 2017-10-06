@@ -8,7 +8,7 @@ import '../../scss/style.scss';
 const preprocessData = (data) => {
   const groups = data.map((value, i) => ({
     id: i,
-    title: value.email,
+    title: `${value.level} - ${value.name}`,
   }));
 
   const items = [];

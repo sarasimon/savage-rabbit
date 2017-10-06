@@ -118,6 +118,7 @@ export default class FiltersComponent extends React.Component {
           id="levels-picker"
           componentClass="select"
           placeholder="select"
+          defaultValue={this.state.level}
           onChange={this.handleLevelChange}
         >
           {levelOptions}
