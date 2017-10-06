@@ -81,11 +81,30 @@ describe('FiltersComponent', () => {
 
   test('Selected skill is number 2', () => {
     const skills = ['1', '2', '3'];
-    const onSearch = (filerdata) => {
-        expect(filerdata.skill).toBe('2');
+    const onSearch = (filterdata) => {
+        expect(filterdata.skill).toBe('2');
     }
     const wrapper = shallow(<FiltersComponent skills={skills} onSearch={onSearch} />);
-    wrapper.find('FormControl').simulate('change', { target: { value: '2' } })
+    wrapper.find('FormControl').filter('#skills-picker').simulate('change', { target: { value: '2' } })
+    wrapper.find('Button').simulate('click');
+  });
+
+  test('Selected skill level by default should be 5', () => {
+    const skills = ['C#', 'JS'];
+    const onSearch = (filterdata) => {
+        expect(filterdata.level).toBe(5);
+    }
+    const wrapper = shallow(<FiltersComponent skills={skills} onSearch={onSearch} />);
+    wrapper.find('Button').simulate('click');
+  });
+
+  test('Selected skill is level 4', () => {
+    const skills = ['C#', 'JS'];
+    const onSearch = (filterdata) => {
+        expect(filterdata.level).toBe(4);
+    }
+    const wrapper = shallow(<FiltersComponent skills={skills} onSearch={onSearch} />);
+    wrapper.find('FormControl').filter('#levels-picker').simulate('change', { target: { value: 4 } })
     wrapper.find('Button').simulate('click');
   });
 });

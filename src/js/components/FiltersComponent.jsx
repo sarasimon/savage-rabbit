@@ -20,6 +20,7 @@ export default class FiltersComponent extends React.Component {
       interviewDuration: config.defaultInterviewDuration,
       interviewDate: moment(),
       skill: props.skills[0],
+      level: 5,
     };
 
     this.handleDateChange = this.handleDateChange.bind(this);
@@ -27,6 +28,13 @@ export default class FiltersComponent extends React.Component {
     this.handleDurationChange = this.handleDurationChange.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
     this.handleSkillChange = this.handleSkillChange.bind(this);
+    this.handleLevelChange = this.handleLevelChange.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.skills && !this.state.skill) {
+      this.setState({ skill: nextProps.skills[0] });
+    }
   }
 
   handleDateChange(date) {
@@ -57,9 +65,16 @@ export default class FiltersComponent extends React.Component {
     this.setState({ skill: event.target.value });
   }
 
+  handleLevelChange(event) {
+    this.setState({ level: parseInt(event.target.value, 10) });
+  }
+
   render() {
     const skillOptions = this.props.skills.map(
       skill => (<option value={skill} key={skill}>{skill}</option>));
+
+    const levelOptions = [1, 2, 3, 4, 5].map(
+      level => (<option value={level} key={level}>{level}</option>));
 
     return (
       <div className="filters-component">
@@ -94,9 +109,18 @@ export default class FiltersComponent extends React.Component {
           id="skills-picker"
           componentClass="select"
           placeholder="select"
+          defaultValue={this.state.skill}
           onChange={this.handleSkillChange}
         >
           {skillOptions}
+        </FormControl>
+        <FormControl
+          id="levels-picker"
+          componentClass="select"
+          placeholder="select"
+          onChange={this.handleLevelChange}
+        >
+          {levelOptions}
         </FormControl>
         <br />
         <Button bsStyle="primary" onClick={this.handleOnClick} >Show</Button>

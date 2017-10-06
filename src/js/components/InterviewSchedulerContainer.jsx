@@ -21,9 +21,9 @@ export default class InterviewSchedulerContainer extends React.Component {
 
     requestSkills(this.props.token, config.sheetId).then((skills) => {
       this.setState({
-        skills
-      })
-    })
+        skills,
+      });
+    });
   }
 
   handlerSearch(filterState) {
