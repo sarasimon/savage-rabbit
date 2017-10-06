@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import Timeline from 'react-calendar-timeline';
+import _ from 'lodash';
 import '../../scss/style.scss';
 
 const preprocessData = (data) => {
@@ -12,6 +13,7 @@ const preprocessData = (data) => {
 
   const items = [];
   let incrementItemId = 0;
+
 
   for (let i = 0; i < data.length; i += 1) {
     const group = i;

@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/lib/Button';
 import 'react-datepicker/dist/react-datepicker';
 import config from '../config';
 import '../../scss/style.scss';
-import convertToTime from '../utils.js';
+import convertToTime from '../utils';
 
 export default class FiltersComponent extends React.Component {
   constructor(props) {
