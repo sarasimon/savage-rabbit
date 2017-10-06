@@ -2,19 +2,19 @@ import request from 'superagent';
 import validator from 'email-validator';
 import _ from 'lodash';
 
-const processRequest = (res) => {
-  const emails = _.flatten(res.body.values);
+const processRequest = (rows, skill, level) => {
+  const headers = rows[0];
+  const indexOfSkill = headers.indexOf(skill);
+  const indexOfEmail = headers.indexOf('Email');
 
-  return emails.filter((email) => {
-    if (validator.validate(email)) {
-      return true;
-    }
-    return false;
-  });
+  return rows
+    .filter(row => row[indexOfSkill] >= level || !skill)
+    .filter(row => validator.validate(row[indexOfEmail]))
+    .map(row => row[indexOfEmail]);
 };
 
-const requestEmails = (token, spreadsheetId) => {
-  const range = 'A1:A999';
+const requestEmails = (token, spreadsheetId, skill, level) => {
+  const range = 'A1:ZZ999';
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}`;
 
   return new Promise((resolve, reject) => {
@@ -25,7 +25,7 @@ const requestEmails = (token, spreadsheetId) => {
         if (err) {
           reject(err);
         } else {
-          const listOfEmails = processRequest(res);
+          const listOfEmails = processRequest(res.body.values, skill, level);
           resolve(listOfEmails);
         }
       });

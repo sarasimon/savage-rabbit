@@ -31,7 +31,10 @@ export default class InterviewSchedulerContainer extends React.Component {
     const workingDayStart = filterState.workingDayStart;
     const workingDayEnd = filterState.workingDayEnd;
     const interviewDuration = filterState.interviewDuration;
-    requestEmails(token, config.sheetId)
+    const skill = filterState.skill;
+    const level = filterState.level;
+
+    requestEmails(token, config.sheetId, skill, level)
       .then(listOfEmails =>
         CalendarService.requestAvailability(token,
           workingDayStart,

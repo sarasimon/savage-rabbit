@@ -5,7 +5,9 @@ describe('SpreadsheetService get emails', () => {
   const RESPONSE = {
     body: {
       values: [
-        'jcoscol@thoughtworks.com',
+        ['Email', 'name', 'C#', 'JS'],
+        ['jcoscol@thoughtworks.com', 'Jordi', '1', '2'],
+        ['ssimon@thoughtworks.com', 'Sara', '3', '4'],
       ],
     },
   };
@@ -13,9 +15,10 @@ describe('SpreadsheetService get emails', () => {
   const EMPTY_CELL_RESPONSE = {
     body: {
       values: [
-        ['jcoscol@thoughtworks.com'],
-        [''],
-        ['evulpe@thoughtworks.com'],
+        ['Email', 'name', 'C#', 'JS'],
+        ['evulpe@thoughtworks.com', 'Emilia', '1', '2'],
+        [],
+        ['ssimon@thoughtworks.com', 'Sara', '3', '4'],
       ],
     },
   };
@@ -23,32 +26,40 @@ describe('SpreadsheetService get emails', () => {
   const INVALID_EMAIL_RESPONSE = {
     body: {
       values: [
-        ['evulpethoughtworks.com'],
-        ['evulpe@thoughtworks.com'],
+        ['Email', 'name', 'C#', 'JS'],
+        ['evulpe@thoughtworks.com', 'Emilia', '1', '2'],
+        ['ssimonrks.com', 'Sara', '3', '4'],
       ],
     },
   };
 
   test('test basic success response', () => {
     require('superagent').__setMockResponse(RESPONSE);
-    requestEmails('token', 'spreadsheetId', 'A1:A99').then((result) => {
-      expect(result).toEqual(['jcoscol@thoughtworks.com']);
+    requestEmails('token', 'spreadsheetId').then((result) => {
+      expect(result).toEqual(['jcoscol@thoughtworks.com', 'ssimon@thoughtworks.com']);
     });
   });
 
   test('test empty cell response', () => {
     require('superagent').__setMockResponse(EMPTY_CELL_RESPONSE);
-    requestEmails('token', 'spreadsheetId', 'A1:A99').then((result) => {
-      expect(result).toEqual(['jcoscol@thoughtworks.com', 'evulpe@thoughtworks.com']);
+    requestEmails('token', 'spreadsheetId').then((result) => {
+      expect(result).toEqual(['evulpe@thoughtworks.com', 'ssimon@thoughtworks.com']);
     });
   });
 
   test('test invalid email response', () => {
     require('superagent').__setMockResponse(INVALID_EMAIL_RESPONSE);
-    requestEmails('token', 'spreadsheetId', 'A1:A99').then((result) => {
+    requestEmails('token', 'spreadsheetId').then((result) => {
       expect(result).toEqual(['evulpe@thoughtworks.com']);
     });
   });
+
+  test('test filtering by skill and level', () => {
+    require('superagent').__setMockResponse(RESPONSE);
+    requestEmails('token', 'spreadsheetId', 'JS', 3).then((result) => {
+      expect(result).toEqual(['ssimon@thoughtworks.com']);
+    });
+  });  
 });
 
 
