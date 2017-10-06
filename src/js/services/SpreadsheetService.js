@@ -1,20 +1,19 @@
 import request from 'superagent';
 import validator from 'email-validator';
-import _ from 'lodash';
 
 const processRequest = (rows, skill, level) => {
   const headers = rows[0];
   const indexOfSkill = headers.indexOf(skill);
   const indexOfEmail = headers.indexOf('Email');
   const indexOfName = headers.indexOf('Name');
-    
+
   return rows
     .filter(row => row[indexOfSkill] >= level || !skill)
     .filter(row => validator.validate(row[indexOfEmail]))
     .map(row => ({
       email: row[indexOfEmail],
-      name: row[indexOfName], 
-      level: row[indexOfSkill]
+      name: row[indexOfName],
+      level: row[indexOfSkill],
     }));
 };
 

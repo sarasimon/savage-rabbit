@@ -12,6 +12,8 @@ test('single event of a single person', () => {
   const data = [
     {
       email: 'jcoscol@thoughtworks.com',
+      name: 'Jordi',
+      level: 3,
       data: [
         {
           start: morningDate,
@@ -23,7 +25,7 @@ test('single event of a single person', () => {
 
   const timetable = shallow(<ResultsComponent data={data} />);
 
-  const expectedGroups = [{ id: 0, title: 'jcoscol@thoughtworks.com' }];
+  const expectedGroups = [{ id: 0, title: '3 - Jordi' }];
   const expectedItems = [{
     id: 0,
     group: 0,
@@ -39,6 +41,8 @@ test('two events of a single person', () => {
   const data = [
     {
       email: 'jcoscol@thoughtworks.com',
+      name: 'Jordi',
+      level: 3,
       data: [
         {
           start: morningDate,
@@ -54,7 +58,7 @@ test('two events of a single person', () => {
 
   const timetable = shallow(<ResultsComponent data={data} />);
 
-  const expectedGroups = [{ id: 0, title: 'jcoscol@thoughtworks.com' }];
+  const expectedGroups = [{ id: 0, title: '3 - Jordi' }];
   const expectedItems = [{
     id: 0,
     group: 0,
@@ -75,6 +79,8 @@ test('single event for each person', () => {
   const data = [
     {
       email: 'jcoscol@thoughtworks.com',
+      name: 'Jordi',
+      level: 1,
       data: [
         {
           start: morningDate,
@@ -84,6 +90,8 @@ test('single event for each person', () => {
     },
     {
       email: 'evulpe@thoughtworks.com',
+      name: 'Emilia',
+      level: 3,
       data: [
         {
           start: morningDate,
@@ -96,8 +104,8 @@ test('single event for each person', () => {
   const timetable = shallow(<ResultsComponent data={data} />);
 
   const expectedGroups = [
-    { id: 0, title: 'jcoscol@thoughtworks.com' },
-    { id: 1, title: 'evulpe@thoughtworks.com' },
+    { id: 0, title: '1 - Jordi' },
+    { id: 1, title: '3 - Emilia' },
   ];
 
   const expectedItems = [{

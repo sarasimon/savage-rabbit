@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import 'react-datepicker/dist/react-datepicker.css';
+import _ from 'lodash';
 import CalendarService from '../services/CalendarService';
 import { requestEmails, requestSkills } from '../services/SpreadsheetService';
 import '../../scss/style.scss';
 import FiltersComponent from './FiltersComponent';
 import ResultsComponent from './ResultsComponent';
 import config from '../config';
-
 
 export default class InterviewSchedulerContainer extends React.Component {
   constructor(props) {
@@ -36,7 +36,7 @@ export default class InterviewSchedulerContainer extends React.Component {
     let people = [];
 
     requestEmails(token, config.sheetId, skill, level)
-      .then(listOfPeople => {
+      .then((listOfPeople) => {
         people = listOfPeople;
         return CalendarService.requestAvailability(token,
           workingDayStart,
@@ -45,9 +45,7 @@ export default class InterviewSchedulerContainer extends React.Component {
           listOfPeople.map(item => item.email));
       })
       .then((freeSlots) => {
-        let merged = _.map(people, function(item) {
-          return _.assign(item, _.find(freeSlots, ['email', item.email]));
-        });
+        let merged = _.map(people, item => _.assign(item, _.find(freeSlots, ['email', item.email])));
         merged = _.reverse(_.sortBy(merged, ['level']));
         this.setState({
           slots: merged,
