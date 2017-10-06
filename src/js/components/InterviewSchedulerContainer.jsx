@@ -9,6 +9,17 @@ import FiltersComponent from './FiltersComponent';
 import ResultsComponent from './ResultsComponent';
 import config from '../config';
 
+const renderResults = (status, slots) => {
+  if (status === 'error') {
+    return (<span> Oopps something wrong happened! </span>);
+  } else if (status === 'loading') {
+    return (<span> Loading data... please wait! </span>);
+  } else if (status === 'success') {
+    return (<ResultsComponent data={slots} />);
+  }
+  return (<div />);
+};
+
 export default class InterviewSchedulerContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -34,7 +45,7 @@ export default class InterviewSchedulerContainer extends React.Component {
     const skill = filterState.skill;
     const level = filterState.level;
     let people = [];
-
+    this.setState({ status: 'loading' });
     requestEmails(token, config.sheetId, skill, level)
       .then((listOfPeople) => {
         people = listOfPeople;
@@ -49,15 +60,20 @@ export default class InterviewSchedulerContainer extends React.Component {
         merged = _.reverse(_.sortBy(merged, ['level']));
         this.setState({
           slots: merged,
+          status: 'success',
         });
+      }).catch(() => {
+        this.setState({ status: 'error' });
       });
   }
 
   render() {
+    const results = renderResults(this.state.status, this.state.slots);
+
     return (
       <div>
         <FiltersComponent skills={this.state.skills} onSearch={this.handlerSearch} />
-        <ResultsComponent data={this.state.slots} />
+        {results}
       </div>
     );
   }
