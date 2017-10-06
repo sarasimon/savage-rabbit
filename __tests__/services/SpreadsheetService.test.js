@@ -1,7 +1,7 @@
 jest.mock('superagent');
-import requestEmails from '../../src/js/services/SpreadsheetService';
+import { requestEmails, requestSkills } from '../../src/js/services/SpreadsheetService';
 
-describe('SpreadsheetService', () => {
+describe('SpreadsheetService get emails', () => {
   const RESPONSE = {
     body: {
       values: [
@@ -49,5 +49,23 @@ describe('SpreadsheetService', () => {
       expect(result).toEqual(['evulpe@thoughtworks.com']);
     });
   });
+});
+
+
+describe('SpreadsheetService get skills', () => {
+
+  const SKILLS_RESPONSE = {
+    body: {
+      values: [['JS', 'C#']],
+    }
+  }
+
+  test('test ', () => {
+    require('superagent').__setMockResponse(SKILLS_RESPONSE);
+    requestSkills('token', 'spreadsheetId').then((result) => {
+      expect(result).toEqual(['JS', 'C#']);
+    });
+  });
+
 });
 

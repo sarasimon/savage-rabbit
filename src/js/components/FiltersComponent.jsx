@@ -4,6 +4,7 @@ import TimePicker from 'react-bootstrap-time-picker';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/lib/Button';
+import FormControl from 'react-bootstrap/lib/FormControl';
 import 'react-datepicker/dist/react-datepicker';
 import config from '../config';
 import '../../scss/style.scss';
@@ -18,12 +19,14 @@ export default class FiltersComponent extends React.Component {
       workingDayEnd: config.defaultDayEnd,
       interviewDuration: config.defaultInterviewDuration,
       interviewDate: moment(),
+      skill: props.skills[0],
     };
 
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleTimeChange = this.handleTimeChange.bind(this);
     this.handleDurationChange = this.handleDurationChange.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
+    this.handleSkillChange = this.handleSkillChange.bind(this);
   }
 
   handleDateChange(date) {
@@ -50,7 +53,14 @@ export default class FiltersComponent extends React.Component {
     this.props.onSearch(this.state);
   }
 
+  handleSkillChange(event) {
+    this.setState({ skill: event.target.value });
+  }
+
   render() {
+    const skillOptions = this.props.skills.map(
+      skill => (<option value={skill} key={skill}>{skill}</option>));
+
     return (
       <div className="filters-component">
         <label htmlFor="date-picker">Interview Date</label>
@@ -79,6 +89,15 @@ export default class FiltersComponent extends React.Component {
           onChange={this.handleDurationChange}
           value={this.state.duration}
         />
+        <label htmlFor="skills-picker">Skills</label>
+        <FormControl
+          id="skills-picker"
+          componentClass="select"
+          placeholder="select"
+          onChange={this.handleSkillChange}
+        >
+          {skillOptions}
+        </FormControl>
         <br />
         <Button bsStyle="primary" onClick={this.handleOnClick} >Show</Button>
       </div>
@@ -88,4 +107,5 @@ export default class FiltersComponent extends React.Component {
 
 FiltersComponent.propTypes = {
   onSearch: PropTypes.func.isRequired,
+  skills: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

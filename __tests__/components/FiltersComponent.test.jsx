@@ -10,7 +10,9 @@ describe('FiltersComponent', () => {
   const defaultInterviewDate = moment();
 
   test('test FiltersComponent initial state', () => {
-    const wrapper = shallow(<FiltersComponent onSearch={() => {}} />);
+    const skills = ['C#', 'JS'];
+    const wrapper = shallow(<FiltersComponent onSearch={() => {}} skills={skills} />);
+
     expect(wrapper.state().workingDayStart.date()).toBe(defaultDayStart.date());
     expect(wrapper.state().workingDayStart.month()).toBe(defaultDayStart.month());
     expect(wrapper.state().workingDayStart.year()).toBe(defaultDayStart.year());
@@ -35,8 +37,9 @@ describe('FiltersComponent', () => {
   });
 
   test('test FiltersComponent handle date change', () => {
+    const skills = ['C#', 'JS'];
     const spy = jest.spyOn(FiltersComponent.prototype, 'handleDateChange');
-    const wrapper = shallow(<FiltersComponent onSearch={() => {}} />);
+    const wrapper = shallow(<FiltersComponent onSearch={() => {}} skills={skills} />);
 
     const newDate = moment().set({ date: 19, month: 12, year: 2017 });
     wrapper.instance().handleDateChange(newDate);
@@ -64,5 +67,25 @@ describe('FiltersComponent', () => {
     expect(wrapper.state().interviewDate.date()).toBe(newDate.date());
     expect(wrapper.state().interviewDate.month()).toBe(newDate.month());
     expect(wrapper.state().interviewDate.year()).toBe(newDate.year());
+  });
+
+  test('Selected skill is the first one by default', () => {
+    const skills = ['1', '2', '3'];
+    const onSearch = (filerdata) => {
+        expect(filerdata.skill).toBe('1');
+    }
+    const wrapper = shallow(<FiltersComponent skills={skills} onSearch={onSearch} />);
+    wrapper.find('Button').simulate('click');
+
+  });
+
+  test('Selected skill is number 2', () => {
+    const skills = ['1', '2', '3'];
+    const onSearch = (filerdata) => {
+        expect(filerdata.skill).toBe('2');
+    }
+    const wrapper = shallow(<FiltersComponent skills={skills} onSearch={onSearch} />);
+    wrapper.find('FormControl').simulate('change', { target: { value: '2' } })
+    wrapper.find('Button').simulate('click');
   });
 });

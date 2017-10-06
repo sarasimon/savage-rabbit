@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import 'react-datepicker/dist/react-datepicker.css';
 import CalendarService from '../services/CalendarService';
-import requestEmails from '../services/SpreadsheetService';
+import { requestEmails, requestSkills } from '../services/SpreadsheetService';
 import '../../scss/style.scss';
 import FiltersComponent from './FiltersComponent';
 import ResultsComponent from './ResultsComponent';
@@ -16,7 +16,14 @@ export default class InterviewSchedulerContainer extends React.Component {
     this.handlerSearch = this.handlerSearch.bind(this);
     this.state = {
       slots: [],
+      skills: [],
     };
+
+    requestSkills(this.props.token, config.sheetId).then((skills) => {
+      this.setState({
+        skills
+      })
+    })
   }
 
   handlerSearch(filterState) {
@@ -24,7 +31,7 @@ export default class InterviewSchedulerContainer extends React.Component {
     const workingDayStart = filterState.workingDayStart;
     const workingDayEnd = filterState.workingDayEnd;
     const interviewDuration = filterState.interviewDuration;
-    requestEmails(token, config.sheetId, 'A2:A999')
+    requestEmails(token, config.sheetId)
       .then(listOfEmails =>
         CalendarService.requestAvailability(token,
           workingDayStart,
@@ -41,7 +48,7 @@ export default class InterviewSchedulerContainer extends React.Component {
   render() {
     return (
       <div>
-        <FiltersComponent onSearch={this.handlerSearch} />
+        <FiltersComponent skills={this.state.skills} onSearch={this.handlerSearch} />
         <ResultsComponent data={this.state.slots} />
       </div>
     );
