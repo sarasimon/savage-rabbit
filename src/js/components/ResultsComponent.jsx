@@ -52,8 +52,8 @@ const ResultsComponent = (props) => {
     <Timeline
       groups={groups}
       items={items}
-      visibleTimeStart={startTime}
-      visibleTimeEnd={endTime}
+      visibleTimeStart={startTime.unix() * 1000}
+      visibleTimeEnd={endTime.unix() * 1000}
       canMove={false}
       maxZoom={86400 * 1000}
     />
