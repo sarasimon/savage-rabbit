@@ -1,5 +1,6 @@
 module.exports = {
   entry: './src/js/scripts.js',
+  devtool: 'cheap-eval-source-map',
   module: {
     rules: [
       {
