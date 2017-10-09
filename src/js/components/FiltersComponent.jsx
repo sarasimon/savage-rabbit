@@ -85,63 +85,69 @@ export default class FiltersComponent extends React.Component {
 
     return (
       <div className="filters-component">
-        <label htmlFor="date-picker">Interview Date</label>
-        <DatePicker
-          selected={this.state.interviewDate}
-          onChange={this.handleDateChange}
-        />
-        <br />
-        <label htmlFor="time-picker">From</label>
-        <TimePicker
-          id="time-picker"
-          format={24}
-          start="09:00"
-          end="18:00"
-          step={30}
-          onChange={this.handleTimeFromChange}
-          value={this.state.fromTime}
-        />
-        <label htmlFor="to-picker">To</label>
-        <TimePicker
-          id="to-picker"
-          format={24}
-          start="09:00"
-          end="18:00"
-          step={30}
-          onChange={this.handleTimeToChange}
-          value={this.state.toTime}
-        />
-        <label htmlFor="duration-picker">Duration</label>
-        <TimePicker
-          id="duration-picker"
-          format={24}
-          start="00:15"
-          end="02:00"
-          step={15}
-          onChange={this.handleDurationChange}
-          value={this.state.duration}
-        />
-        <label htmlFor="skills-picker">Skills</label>
-        <FormControl
-          id="skills-picker"
-          componentClass="select"
-          placeholder="select"
-          defaultValue={this.state.skill}
-          onChange={this.handleSkillChange}
-        >
-          {skillOptions}
-        </FormControl>
-        <FormControl
-          id="levels-picker"
-          componentClass="select"
-          placeholder="select"
-          defaultValue={this.state.level}
-          onChange={this.handleLevelChange}
-        >
-          {levelOptions}
-        </FormControl>
-        <br />
-        <Button bsStyle="primary" onClick={this.handleOnClick} >Show</Button>
+        <div className="filters-component-row">
+          <label htmlFor="date-picker">Interview Date:</label>
+          <DatePicker
+            selected={this.state.interviewDate}
+            onChange={this.handleDateChange}
+          />
+        </div>
+        <div className="filters-component-row">
+          <label htmlFor="time-picker">From:</label>
+          <TimePicker
+            id="time-picker"
+            format={24}
+            start="09:00"
+            end="18:00"
+            step={30}
+            onChange={this.handleTimeFromChange}
+            value={this.state.fromTime}
+          />
+          <label htmlFor="to-picker">To:</label>
+          <TimePicker
+            id="to-picker"
+            format={24}
+            start="09:00"
+            end="18:00"
+            step={30}
+            onChange={this.handleTimeToChange}
+            value={this.state.toTime}
+          />
+          <label htmlFor="duration-picker">Duration:</label>
+          <TimePicker
+            id="duration-picker"
+            format={24}
+            start="00:15"
+            end="02:00"
+            step={15}
+            onChange={this.handleDurationChange}
+            value={this.state.duration}
+          />
+        </div>
+        <div className="filters-component-row">
+          <label htmlFor="skills-picker">Skills:</label>
+          <FormControl
+            id="skills-picker"
+            componentClass="select"
+            placeholder="select"
+            defaultValue={this.state.skill}
+            onChange={this.handleSkillChange}
+          >
+            {skillOptions}
+          </FormControl>
+          <FormControl
+            id="levels-picker"
+            componentClass="select"
+            placeholder="select"
+            defaultValue={this.state.level}
+            onChange={this.handleLevelChange}
+          >
+            {levelOptions}
+          </FormControl>
+        </div>
+        <div className="filters-component-row">
+          <Button bsStyle="primary" onClick={this.handleOnClick} >Show</Button>
+        </div>
       </div>
     );
   }
