@@ -22,7 +22,10 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="app">
-        <h1 className="title">Savage Rabbit</h1>
+        <div>
+          <h1 className="title">Savage Rabbit</h1>
+          <img className="logo" src="https://media.giphy.com/media/WiXMlla4ZFR8Q/giphy.gif" alt="not important" />
+        </div>
         { this.state.token ?
           <InterviewSchedulerContainer token={this.state.token} /> :
           <Login onSuccess={this.handlerToken} /> }

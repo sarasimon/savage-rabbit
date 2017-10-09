@@ -11,6 +11,15 @@ body {
     margin: 30px;
   }
   width: 900px;
+
+  .logo {
+    width: 200px;
+    float: right;
+  }
+
+  h1 {
+    display: inline-block;
+  }
 }
 
 .login {
