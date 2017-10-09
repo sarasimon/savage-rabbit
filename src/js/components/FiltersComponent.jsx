@@ -21,10 +21,13 @@ export default class FiltersComponent extends React.Component {
       interviewDate: moment(),
       skill: props.skills[0],
       level: 5,
+      fromTime: 9 * 60 * 60,
+      toTime: 18 * 60 * 60,
     };
 
     this.handleDateChange = this.handleDateChange.bind(this);
-    this.handleTimeChange = this.handleTimeChange.bind(this);
+    this.handleTimeFromChange = this.handleTimeFromChange.bind(this);
+    this.handleTimeToChange = this.handleTimeToChange.bind(this);
     this.handleDurationChange = this.handleDurationChange.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
     this.handleSkillChange = this.handleSkillChange.bind(this);
@@ -46,11 +49,15 @@ export default class FiltersComponent extends React.Component {
     this.state.workingDayEnd.set({ date: date.get('date'), month: date.get('month'), year: date.get('year') });
   }
 
-  handleTimeChange(time) {
-    this.setState({ time });
+  handleTimeFromChange(time) {
+    this.setState({ fromTime: time });
     this.state.workingDayStart.set(convertToTime(time));
   }
 
+  handleTimeToChange(time) {
+    this.setState({ toTime: time });
+    this.state.workingDayEnd.set(convertToTime(time));
+  }
 
   handleDurationChange(duration) {
     this.setState({ duration });
@@ -84,15 +91,25 @@ export default class FiltersComponent extends React.Component {
           onChange={this.handleDateChange}
         />
         <br />
-        <label htmlFor="time-picker">Start</label>
+        <label htmlFor="time-picker">From</label>
         <TimePicker
           id="time-picker"
           format={24}
           start="09:00"
           end="18:00"
           step={30}
-          onChange={this.handleTimeChange}
-          value={this.state.time}
+          onChange={this.handleTimeFromChange}
+          value={this.state.fromTime}
+        />
+        <label htmlFor="to-picker">To</label>
+        <TimePicker
+          id="to-picker"
+          format={24}
+          start="09:00"
+          end="18:00"
+          step={30}
+          onChange={this.handleTimeToChange}
+          value={this.state.toTime}
         />
         <label htmlFor="duration-picker">Duration</label>
         <TimePicker

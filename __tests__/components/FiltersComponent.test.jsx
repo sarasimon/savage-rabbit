@@ -72,28 +72,27 @@ describe('FiltersComponent', () => {
   test('Selected skill is the first one by default', () => {
     const skills = ['1', '2', '3'];
     const onSearch = (filerdata) => {
-        expect(filerdata.skill).toBe('1');
-    }
+      expect(filerdata.skill).toBe('1');
+    };
     const wrapper = shallow(<FiltersComponent skills={skills} onSearch={onSearch} />);
     wrapper.find('Button').simulate('click');
-
   });
 
   test('Selected skill is number 2', () => {
     const skills = ['1', '2', '3'];
     const onSearch = (filterdata) => {
-        expect(filterdata.skill).toBe('2');
-    }
+      expect(filterdata.skill).toBe('2');
+    };
     const wrapper = shallow(<FiltersComponent skills={skills} onSearch={onSearch} />);
-    wrapper.find('FormControl').filter('#skills-picker').simulate('change', { target: { value: '2' } })
+    wrapper.find('FormControl').filter('#skills-picker').simulate('change', { target: { value: '2' } });
     wrapper.find('Button').simulate('click');
   });
 
   test('Selected skill level by default should be 5', () => {
     const skills = ['C#', 'JS'];
     const onSearch = (filterdata) => {
-        expect(filterdata.level).toBe(5);
-    }
+      expect(filterdata.level).toBe(5);
+    };
     const wrapper = shallow(<FiltersComponent skills={skills} onSearch={onSearch} />);
     wrapper.find('Button').simulate('click');
   });
@@ -101,10 +100,30 @@ describe('FiltersComponent', () => {
   test('Selected skill is level 4', () => {
     const skills = ['C#', 'JS'];
     const onSearch = (filterdata) => {
-        expect(filterdata.level).toBe(4);
-    }
+      expect(filterdata.level).toBe(4);
+    };
     const wrapper = shallow(<FiltersComponent skills={skills} onSearch={onSearch} />);
-    wrapper.find('FormControl').filter('#levels-picker').simulate('change', { target: { value: 4 } })
+    wrapper.find('FormControl').filter('#levels-picker').simulate('change', { target: { value: 4 } });
+    wrapper.find('Button').simulate('click');
+  });
+
+  test('default to value is 18.00', (done) => {
+    const onSearch = (filterdata) => {
+      expect(filterdata.workingDayEnd.hour()).toBe(18);
+      done();
+    };
+    const wrapper = shallow(<FiltersComponent skills={[]} onSearch={onSearch} />);
+    wrapper.find('Button').simulate('click');
+  });
+
+  test('select 16 as the to hour...', (done) => {
+    const skills = ['C#', 'JS'];
+    const onSearch = (filterdata) => {
+      expect(filterdata.workingDayEnd.hour()).toBe(16);
+      done();
+    };
+    const wrapper = shallow(<FiltersComponent skills={skills} onSearch={onSearch} />);
+    wrapper.find('o').filter('#to-picker').simulate('change', 60 * 60 * 16);
     wrapper.find('Button').simulate('click');
   });
 });
