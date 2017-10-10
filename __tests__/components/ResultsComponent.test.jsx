@@ -31,10 +31,11 @@ test('single event of a single person', () => {
     group: 0,
     start_time: moment(morningDate),
     end_time: moment(lunchDate),
+    className: 'two',
   }];
 
-  expect(timetable.prop('groups')).toMatch(expectedGroups);
-  expect(timetable.prop('items')).toMatch(expectedItems);
+  expect(timetable.prop('groups')).toEqual(expectedGroups);
+  expect(timetable.prop('items')).toEqual(expectedItems);
 });
 
 test('two events of a single person', () => {
@@ -64,11 +65,13 @@ test('two events of a single person', () => {
     group: 0,
     start_time: moment(morningDate),
     end_time: moment(lunchDate),
+    className: 'two',
   }, {
     id: 1,
     group: 0,
     start_time: moment(lunchDate),
     end_time: moment(nightDate),
+    className: 'two',
   }];
 
   expect(timetable.prop('groups')).toEqual(expectedGroups);
@@ -113,11 +116,13 @@ test('single event for each person', () => {
     group: 0,
     start_time: moment(morningDate),
     end_time: moment(lunchDate),
+    className: 'two',
   }, {
     id: 1,
     group: 1,
     start_time: moment(morningDate),
     end_time: moment(lunchDate),
+    className: 'two',
   }];
 
   expect(timetable.prop('groups')).toEqual(expectedGroups);
