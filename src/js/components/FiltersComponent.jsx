@@ -117,7 +117,7 @@ export default class FiltersComponent extends React.Component {
           <TimePicker
             id="duration-picker"
             format={24}
-            start="00:15"
+            start="00:30"
             end="02:00"
             step={15}
             onChange={this.handleDurationChange}

@@ -26,6 +26,10 @@ const processAvailabilityRequest = (events, start, end, duration) => {
   const endOfDay = new Date(end);
   const slots = [];
 
+  if (events.length === 0) {
+    addSlot(slots, slotStart, endOfDay);
+  }
+
   events.forEach((event, i) => {
     const eventTime = new Date(event.start.dateTime);
 
@@ -121,4 +125,4 @@ const requestAvailability = ((token, workingDayStart, workingDayEnd,
   return Promise.all(promises);
 });
 
-export default { requestAvailability, requestSingleAvailability, requestInterviewsPerPerson };
+export default { requestAvailability, requestInterviewsPerPerson };

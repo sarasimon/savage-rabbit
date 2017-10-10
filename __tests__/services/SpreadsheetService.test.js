@@ -88,12 +88,11 @@ describe('SpreadsheetService get emails', () => {
 
 
 describe('SpreadsheetService get skills', () => {
-
   const SKILLS_RESPONSE = {
     body: {
       values: [['JS', 'C#']],
-    }
-  }
+    },
+  };
 
   test('test get skills', () => {
     require('superagent').__setMockResponse(SKILLS_RESPONSE);
@@ -101,6 +100,5 @@ describe('SpreadsheetService get skills', () => {
       expect(result).toEqual(['JS', 'C#']);
     });
   });
-
 });
 
