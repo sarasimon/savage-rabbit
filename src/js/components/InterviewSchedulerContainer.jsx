@@ -47,6 +47,18 @@ export default class InterviewSchedulerContainer extends React.Component {
     let people = [];
     this.setState({ status: 'loading' });
     requestEmails(token, config.sheetId, skill, level)
+      .then(listOfPeople => CalendarService.requestInterviewsPerPerson(token, workingDayStart)
+        .then((attendeesCount) => {
+
+          listOfPeople.forEach((person) => {
+            const interviewsCount = attendeesCount[person.email] || 0;
+            person.weekInterviews = interviewsCount;
+          });
+          console.log(listOfPeople);
+          // return listOfPeople.filter(person => person.weekInterviews < 2);
+
+          return listOfPeople.filter(person => !attendeesCount[person.email] || attendeesCount[person.email] < 2)
+        }))
       .then((listOfPeople) => {
         people = listOfPeople;
         return CalendarService.requestAvailability(token,
@@ -62,7 +74,8 @@ export default class InterviewSchedulerContainer extends React.Component {
           slots: merged,
           status: 'success',
         });
-      }).catch(() => {
+      })
+      .catch(() => {
         this.setState({ status: 'error' });
       });
   }

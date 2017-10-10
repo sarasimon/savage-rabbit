@@ -55,6 +55,7 @@ const Request = {
   },
   __setMockResponse(mockRes) {
     mockResponse = mockRes;
+    mockError = undefined;
   },
   __setMockError(mockErr) {
     mockError = mockErr;
