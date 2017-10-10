@@ -97,7 +97,7 @@ describe('SpreadsheetService get skills', () => {
   test('test get skills', () => {
     require('superagent').__setMockResponse(SKILLS_RESPONSE);
     requestSkills('token', 'spreadsheetId').then((result) => {
-      expect(result).toEqual(['JS', 'C#']);
+      expect(result).toEqual(['JS', 'C#', 'Any skill']);
     });
   });
 });

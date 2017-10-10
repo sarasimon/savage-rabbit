@@ -8,12 +8,12 @@ const processRequest = (rows, skill, level) => {
   const indexOfName = headers.indexOf('Name');
 
   return rows
-    .filter(row => row[indexOfSkill] >= level || !skill)
+    .filter(row => row[indexOfSkill] >= level || !skill || skill === 'Any skill')
     .filter(row => validator.validate(row[indexOfEmail]))
     .map(row => ({
       email: row[indexOfEmail],
       name: row[indexOfName],
-      level: row[indexOfSkill],
+      level: row[indexOfSkill] ? row[indexOfSkill] : '',
     }));
 };
 
@@ -49,6 +49,7 @@ const requestSkills = (token, spreadsheetId) => {
           reject(err);
         } else {
           const listOfSkills = res.body.values[0];
+          listOfSkills.push('Any skill');
           resolve(listOfSkills);
         }
       });

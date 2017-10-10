@@ -50,18 +50,18 @@ export default class FiltersComponent extends React.Component {
   }
 
   handleTimeFromChange(time) {
-    this.setState({ fromTime: time });
     this.state.workingDayStart.set(convertToTime(time));
+    this.setState({ fromTime: time }, this.handleOnClick);
   }
 
   handleTimeToChange(time) {
-    this.setState({ toTime: time });
     this.state.workingDayEnd.set(convertToTime(time));
+    this.setState({ toTime: time }, this.handleOnClick);
   }
 
   handleDurationChange(duration) {
-    this.setState({ duration });
     this.state.interviewDuration.set(convertToTime(duration));
+    this.setState({ duration }, this.handleOnClick);
   }
 
   handleOnClick() {
@@ -69,11 +69,11 @@ export default class FiltersComponent extends React.Component {
   }
 
   handleSkillChange(event) {
-    this.setState({ skill: event.target.value });
+    this.setState({ skill: event.target.value }, this.handleOnClick);
   }
 
   handleLevelChange(event) {
-    this.setState({ level: parseInt(event.target.value, 10) });
+    this.setState({ level: parseInt(event.target.value, 10) }, this.handleOnClick);
   }
 
   render() {
@@ -135,6 +135,7 @@ export default class FiltersComponent extends React.Component {
           >
             {skillOptions}
           </FormControl>
+          <label htmlFor="levels-picker">Level:</label>
           <FormControl
             id="levels-picker"
             componentClass="select"

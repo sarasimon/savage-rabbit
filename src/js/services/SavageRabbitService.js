@@ -8,12 +8,12 @@ const requestFreeSlots =
 (token, sheetId, skill, level, workingDayStart, workingDayEnd, interviewDuration) =>
   requestEmails(token, sheetId, skill, level)
     .then(listOfPeople => CalendarService.requestInterviewsPerPerson(token, workingDayStart)
-      .then((attendeesCount) => {
-        return listOfPeople.map(person => ({
-          ...person,
-          weekInterviews: attendeesCount[person.email] || 0,
-        }));
-      }))
+      .then(attendeesCount =>
+        listOfPeople.map(person => (
+          { ...person,
+            weekInterviews: attendeesCount[person.email] || 0,
+          })),
+      ))
     .then((listOfPeople) => {
       people = listOfPeople;
       return CalendarService.requestAvailability(token,
@@ -24,7 +24,7 @@ const requestFreeSlots =
     })
     .then((freeSlots) => {
       const merged = _.map(people, item => _.assign(item, _.find(freeSlots, ['email', item.email])))
-       .filter(person => person.data.length > 0);
+        .filter(person => person.data.length > 0);
       return _.reverse(_.sortBy(merged, ['level']));
     });
 

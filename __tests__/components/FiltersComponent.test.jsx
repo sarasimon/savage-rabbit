@@ -10,7 +10,7 @@ describe('FiltersComponent', () => {
   const defaultInterviewDate = moment();
 
   test('test FiltersComponent initial state', () => {
-    const skills = ['C#', 'JS'];
+    const skills = ['C#', 'JS', 'Any skill'];
     const wrapper = shallow(<FiltersComponent onSearch={() => {}} skills={skills} />);
 
     expect(wrapper.state().workingDayStart.date()).toBe(defaultDayStart.date());
@@ -37,7 +37,7 @@ describe('FiltersComponent', () => {
   });
 
   test('test FiltersComponent handle date change', () => {
-    const skills = ['C#', 'JS'];
+    const skills = ['C#', 'JS', 'Any skill'];
     const spy = jest.spyOn(FiltersComponent.prototype, 'handleDateChange');
     const wrapper = shallow(<FiltersComponent onSearch={() => {}} skills={skills} />);
 
@@ -89,7 +89,7 @@ describe('FiltersComponent', () => {
   });
 
   test('Selected skill level by default should be 5', () => {
-    const skills = ['C#', 'JS'];
+    const skills = ['C#', 'JS', 'Any skill'];
     const onSearch = (filterdata) => {
       expect(filterdata.level).toBe(5);
     };
@@ -98,7 +98,7 @@ describe('FiltersComponent', () => {
   });
 
   test('Selected skill is level 4', () => {
-    const skills = ['C#', 'JS'];
+    const skills = ['C#', 'JS', 'Any skill'];
     const onSearch = (filterdata) => {
       expect(filterdata.level).toBe(4);
     };
@@ -117,7 +117,7 @@ describe('FiltersComponent', () => {
   });
 
   test('select 16 as the to hour...', (done) => {
-    const skills = ['C#', 'JS'];
+    const skills = ['C#', 'JS', 'Any skill'];
     const onSearch = (filterdata) => {
       expect(filterdata.workingDayEnd.hour()).toBe(16);
       done();

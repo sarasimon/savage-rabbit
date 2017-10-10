@@ -20,13 +20,14 @@ const preprocessData = (data) => {
     const weekInterviews = data[i].weekInterviews;
 
     for (let j = 0; j < events.length; j += 1) {
+      const cname = weekInterviews === 1 ? 'one' : 'two';
       const event = events[j];
       const item = {
         id: incrementItemId,
         group,
         start_time: moment(event.start),
         end_time: moment(event.end),
-        className: weekInterviews == 0 ? 'none' : (weekInterviews == 1 ? 'one' : 'two') ,
+        className: weekInterviews === 0 ? 'none' : cname,
       };
 
       items.push(item);
