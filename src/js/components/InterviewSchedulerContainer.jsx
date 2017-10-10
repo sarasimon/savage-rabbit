@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import 'react-datepicker/dist/react-datepicker.css';
-import _ from 'lodash';
-import CalendarService from '../services/CalendarService';
-import { requestEmails, requestSkills } from '../services/SpreadsheetService';
+import { requestSkills } from '../services/SpreadsheetService';
+import requestFreeSlots from '../services/SavageRabbitService';
 import '../../scss/style.scss';
 import FiltersComponent from './FiltersComponent';
 import ResultsComponent from './ResultsComponent';
@@ -44,34 +43,15 @@ export default class InterviewSchedulerContainer extends React.Component {
     const interviewDuration = filterState.interviewDuration;
     const skill = filterState.skill;
     const level = filterState.level;
-    let people = [];
     this.setState({ status: 'loading' });
-    requestEmails(token, config.sheetId, skill, level)
-      .then(listOfPeople => CalendarService.requestInterviewsPerPerson(token, workingDayStart)
-        .then((attendeesCount) => {
-          const peopleWithInterviews = listOfPeople.map(person => ({
-            ...person,
-            weekInterviews: attendeesCount[person.email] || 0,
-          }));
-          return peopleWithInterviews.filter(person => person.weekInterviews <= 2);
-        }))
-      .then((listOfPeople) => {
-        people = listOfPeople;
-        return CalendarService.requestAvailability(token,
-          workingDayStart,
-          workingDayEnd,
-          interviewDuration,
-          listOfPeople.map(item => item.email));
-      })
-      .then((freeSlots) => {
-        let merged = _.map(people, item => _.assign(item, _.find(freeSlots, ['email', item.email])));
-        merged = _.reverse(_.sortBy(merged, ['level']));
+    requestFreeSlots(token, config.sheetId, skill, level,
+      workingDayStart, workingDayEnd, interviewDuration)
+      .then((listOfFreeSlots) => {
         this.setState({
-          slots: merged,
+          slots: listOfFreeSlots,
           status: 'success',
         });
-      })
-      .catch(() => {
+      }).catch(() => {
         this.setState({ status: 'error' });
       });
   }
