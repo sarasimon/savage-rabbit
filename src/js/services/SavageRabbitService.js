@@ -9,11 +9,10 @@ const requestFreeSlots =
   requestEmails(token, sheetId, skill, level)
     .then(listOfPeople => CalendarService.requestInterviewsPerPerson(token, workingDayStart)
       .then((attendeesCount) => {
-        const peopleWithInterviews = listOfPeople.map(person => ({
+        return listOfPeople.map(person => ({
           ...person,
           weekInterviews: attendeesCount[person.email] || 0,
         }));
-        return peopleWithInterviews.filter(person => person.weekInterviews <= 2);
       }))
     .then((listOfPeople) => {
       people = listOfPeople;

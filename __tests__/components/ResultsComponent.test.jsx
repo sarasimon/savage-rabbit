@@ -33,8 +33,8 @@ test('single event of a single person', () => {
     end_time: moment(lunchDate),
   }];
 
-  expect(timetable.prop('groups')).toEqual(expectedGroups);
-  expect(timetable.prop('items')).toEqual(expectedItems);
+  expect(timetable.prop('groups')).toMatch(expectedGroups);
+  expect(timetable.prop('items')).toMatch(expectedItems);
 });
 
 test('two events of a single person', () => {

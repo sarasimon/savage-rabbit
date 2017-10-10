@@ -50,6 +50,25 @@ body {
   }
 }
 
+.react-calendar-timeline .rct-items .rct-item.none {
+  background-color: #32CD32;
+  border: 1px solid #D3D3D3;
+}
+
+.react-calendar-timeline .rct-items .rct-item.one {
+  background-color: #fdff0c;
+  border: 1px solid #D3D3D3;
+}
+
+.react-calendar-timeline .rct-items .rct-item.two {
+  background-color: #f40909;
+  border: 1px solid #D3D3D3;
+}
+
+.react-label-group {
+  background-color: #fdff0c;
+}
+
 .react-datepicker-wrapper {
   width: 100%;
   display: block;
