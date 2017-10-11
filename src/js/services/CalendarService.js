@@ -1,52 +1,28 @@
+/* eslint no-underscore-dangle: "off" */
+
 import request from 'superagent';
 import moment from 'moment';
-import { convertEventDateToDatetime } from '../utils';
 import _ from 'lodash';
+import { convertEventDateToDatetime } from '../utils';
 
-const isAvailableSlot = (slotStart, nextEvent, interviewDuration) => {
-  const slotDuration = nextEvent - slotStart;
-  const miliSecondsMargin = 1000;
-  const hoursToMinutes = 60;
-  const minutesToMiliSeconds = 60 * 1000;
-  const currentHourInMinutes = interviewDuration.hour() * hoursToMinutes;
-  const duration = (interviewDuration.minute() + currentHourInMinutes) * minutesToMiliSeconds;
+require('twix');
 
-  return (moment(slotStart).isBefore(nextEvent) &&
-   (slotDuration + miliSecondsMargin >= duration));
-};
 
-const addSlot = (slots, start, end) => {
-  const slot = {
-    start,
-    end,
-  };
-  slots.push(slot);
-};
- 
 const processAvailabilityRequest = (events, start, end, duration) => {
-  let slotStart = new Date(start);
-  const endOfDay = new Date(end);
-  const slots = [];
+  const eventsTime = events.map(event => convertEventDateToDatetime(event));
+  const minuteDuration = duration.minute() + (duration.hour() * 60);
+  let queryRange = [moment(start).twix(end)];
 
-  events = events.map(event => convertEventDateToDatetime(event))
-  events = _.sortBy(events, (event) => event.end);
-
-  if (events.length === 0) {
-    addSlot(slots, slotStart, endOfDay);
-  }
-
-  events.forEach((event, i) => {
-    if (isAvailableSlot(slotStart, event.start, duration)) {
-      addSlot(slots, slotStart, event.start);
-    }
-
-    slotStart = event.end;
-
-    if (i === (events.length - 1) && isAvailableSlot(slotStart, endOfDay, duration)) {
-      addSlot(slots, slotStart, endOfDay);
-    }
+  eventsTime.forEach((event) => {
+    const eventRange = moment(event.start).twix(event.end);
+    queryRange = _.flatMap(queryRange, range => range.difference(eventRange));
   });
-  return slots;
+
+  return queryRange.filter(range => range.asDuration('minutes')._milliseconds / 60000 >= minuteDuration)
+    .map(range => ({
+      start: range._start.toDate(),
+      end: range._end.toDate(),
+    }));
 };
 
 const countEventsPerPerson = (events) => {

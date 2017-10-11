@@ -169,7 +169,7 @@ const RESPONSE_ALL_DAY_EVENT_OVERLAP = {
   test('test basic no time between events', (done) => {
     require('superagent').__setMockResponse(RESPONSE_TWO_EVENTS);
 
-    CalendarService.requestAvailability('token', moment(queryStart), moment(queryEnd), duration, ['cpania@thoughtworks.com']).then((slots) => {
+    CalendarService.requestAvailability('token', moment(queryStart), moment(queryEnd), longDuration, ['cpania@thoughtworks.com']).then((slots) => {
       expect(slots).toEqual([{
         email: 'cpania@thoughtworks.com',
         data: [],
