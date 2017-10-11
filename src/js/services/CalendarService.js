@@ -1,5 +1,7 @@
 import request from 'superagent';
 import moment from 'moment';
+import { convertEventDateToDatetime } from '../utils';
+import _ from 'lodash';
 
 const isAvailableSlot = (slotStart, nextEvent, interviewDuration) => {
   const slotDuration = nextEvent - slotStart;
@@ -20,24 +22,26 @@ const addSlot = (slots, start, end) => {
   };
   slots.push(slot);
 };
-
+ 
 const processAvailabilityRequest = (events, start, end, duration) => {
   let slotStart = new Date(start);
   const endOfDay = new Date(end);
   const slots = [];
+
+  events = events.map(event => convertEventDateToDatetime(event))
+  events = _.sortBy(events, (event) => event.end);
 
   if (events.length === 0) {
     addSlot(slots, slotStart, endOfDay);
   }
 
   events.forEach((event, i) => {
-    const eventTime = new Date(event.start.dateTime);
-
-    if (isAvailableSlot(slotStart, eventTime, duration)) {
-      addSlot(slots, slotStart, eventTime);
+    if (isAvailableSlot(slotStart, event.start, duration)) {
+      addSlot(slots, slotStart, event.start);
     }
 
-    slotStart = new Date(event.end.dateTime);
+    slotStart = event.end;
+
     if (i === (events.length - 1) && isAvailableSlot(slotStart, endOfDay, duration)) {
       addSlot(slots, slotStart, endOfDay);
     }

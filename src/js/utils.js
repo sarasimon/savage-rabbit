@@ -9,4 +9,22 @@ const convertToTime = (seconds) => {
   };
 };
 
-export default convertToTime;
+const convertEventDateToDatetime = (event) => {
+
+	let start = new Date(event.start.dateTime);
+	if (event.start.date !== undefined) {
+		start = new Date(`${event.start.date}T00:00:00`)
+	}
+
+	let end = new Date(event.end.dateTime);
+	if (event.end.date !== undefined) {
+		end = new Date(`${event.end.date}T23:59:00`)
+	}
+
+	return {
+		start,
+		end,
+	};
+}
+
+export { convertToTime, convertEventDateToDatetime } ;

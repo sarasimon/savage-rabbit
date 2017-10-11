@@ -5,7 +5,7 @@ import CalendarService from '../../src/js/services/CalendarService';
 describe('CalendarService', () => {
   const queryStart = new Date('2017-10-05T09:00:00+02:00'); // Thursday, 5 October 2017 09:00:00
   const queryEnd = new Date('2017-10-05T13:00:00+02:00'); // Thursday, 5 October 2017 13:00:00
-  const duration = moment().set({ hour: 0, minute: 15, second: 0 });
+  const duration = moment().set({ hour: 0, minute: 30, second: 0 });
   const longDuration = moment().set({ hour: 3, minute: 0, second: 0 });
 
   const morning_event = {
@@ -34,6 +34,34 @@ describe('CalendarService', () => {
     },
   };
 
+  const all_day_event = {
+   "start": {
+    "date": "2017-10-02"
+   },
+   "end": {
+    "date": "2017-10-14"
+   },
+  };
+
+  const all_day_event_with_time = {
+   "start": {
+    "dateTime": "2017-10-08T18:00:00+02:00"
+   },
+   "end": {
+    "dateTime": "2017-10-13T11:00:00+02:00"
+   }
+ };
+
+  const normal_event =   {
+   "start": {
+    "dateTime": "2017-10-13T10:15:00+02:00"
+   },
+   "end": {
+    "dateTime": "2017-10-13T10:30:00+02:00"
+   },
+  };
+
+
   const RESPONSE_WITHOUT_EVENT = {
     body:
     {
@@ -58,6 +86,29 @@ describe('CalendarService', () => {
     },
   };
 
+  const RESPONSE_ALL_DAY_EVENT = {
+    body:
+    {
+      summary: 'cpania@thoughtworks.com',
+      "items": [ all_day_event, all_day_event_with_time, normal_event],
+    },
+  };
+
+const RESPONSE_ALL_DAY_EVENT_OVERLAP = {
+    body:
+    {
+      summary: 'cpania@thoughtworks.com',
+      "items": [ all_day_event_with_time, {
+   "start": {
+    "dateTime": "2017-10-13T10:15:00+02:00"
+   },
+   "end": {
+    "dateTime": "2017-10-13T10:30:00+02:00"
+   },
+  }
+ ]
+    },
+  };
   test('test basic no event in calendar response', (done) => {
     require('superagent').__setMockResponse(RESPONSE_WITHOUT_EVENT);
 
@@ -117,6 +168,20 @@ describe('CalendarService', () => {
 
   test('test basic no time between events', (done) => {
     require('superagent').__setMockResponse(RESPONSE_TWO_EVENTS);
+
+    CalendarService.requestAvailability('token', moment(queryStart), moment(queryEnd), duration, ['cpania@thoughtworks.com']).then((slots) => {
+      expect(slots).toEqual([{
+        email: 'cpania@thoughtworks.com',
+        data: [],
+      }]);
+      done();
+    });
+  });
+
+  test('test basic no time when day is full', (done) => {
+    require('superagent').__setMockResponse(RESPONSE_ALL_DAY_EVENT);
+    const queryStart = new Date('2017-10-13T07:00:00.541Z');
+    const queryEnd = new Date('2017-10-13T16:00:00.541Z');
 
     CalendarService.requestAvailability('token', moment(queryStart), moment(queryEnd), longDuration, ['cpania@thoughtworks.com']).then((slots) => {
       expect(slots).toEqual([{

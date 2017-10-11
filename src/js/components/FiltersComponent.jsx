@@ -8,7 +8,7 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import 'react-datepicker/dist/react-datepicker';
 import config from '../config';
 import '../../scss/style.scss';
-import convertToTime from '../utils';
+import { convertToTime } from '../utils';
 
 export default class FiltersComponent extends React.Component {
   constructor(props) {
