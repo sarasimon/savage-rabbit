@@ -1,5 +1,7 @@
 module.exports = {
-  entry: './src/js/scripts.js',
+  entry: {
+    index: './src/js/index.jsx',
+    options: './src/js/options.jsx' },
   devtool: 'cheap-eval-source-map',
   module: {
     rules: [
@@ -25,6 +27,6 @@ module.exports = {
     extensions: ['.js', '.json', '.jsx'],
   },
   output: {
-    filename: './dist/bundle.js',
+    filename: './dist/[name].js',
   },
 };
