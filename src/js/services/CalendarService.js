@@ -10,20 +10,19 @@ require('twix');
 const positiveResponse = (attendees, email) => {
   let hasPositiveResponse = true;
   attendees.forEach((attendee) => {
-        if(attendee.email === email){
-          hasPositiveResponse = attendee.responseStatus === 'accepted' || attendee.responseStatus === 'needsAction'
-       }
-      }
-  )
+    if (attendee.email === email) {
+      hasPositiveResponse = attendee.responseStatus !== 'accepted' || attendee.responseStatus === 'needsAction';
+    }
+  },
+  );
   return hasPositiveResponse;
 };
 
 const processAvailabilityRequest = (events, email, start, end, duration) => {
-  
-  const confirmedEvents = 
-   events.filter(event => 
-    !event.attendees && (event.responseStatus === 'confirmed' || event.responseStatus === 'needsAction') || 
-    event.attendees && positiveResponse(event.attendees, email))
+  const confirmedEvents =
+   events.filter(event =>
+     (!event.attendees && (event.responseStatus === 'confirmed' || event.responseStatus === 'needsAction')) ||
+    (event.attendees && positiveResponse(event.attendees, email)));
 
   const eventsTime = confirmedEvents.map(event => convertEventDateToDatetime(event));
   const minuteDuration = duration.minute() + (duration.hour() * 60);
@@ -107,7 +106,12 @@ const requestSingleAvailability = (token, workingDayStart, workingDayEnd,
         } else {
           resolve({
             email,
-            data: processRequestFunct(res.body.items, res.body.summary, start, end, interviewDuration),
+            data: processRequestFunct(
+              res.body.items,
+              res.body.summary,
+              start,
+              end,
+              interviewDuration),
           });
         }
       });
