@@ -9,7 +9,20 @@ describe('CalendarService', () => {
   const longDuration = moment().set({ hour: 3, minute: 0, second: 0 });
 
   const morning_event = {
-    status: 'confirmed',
+    responseStatus: 'confirmed',
+    summary: 'Timesheet',
+    start: {
+      dateTime: '2017-10-05T11:15:00+02:00',
+      timeZone: 'Europe/London',
+    },
+    end: {
+      dateTime: '2017-10-05T11:45:00+02:00',
+      timeZone: 'Europe/London',
+    },
+  };
+
+  const morning_rejected_event = {
+    responseStatus: 'rejected',
     summary: 'Timesheet',
     start: {
       dateTime: '2017-10-05T11:15:00+02:00',
@@ -22,7 +35,7 @@ describe('CalendarService', () => {
   };
 
   const midday_event = {
-    status: 'confirmed',
+    responseStatus: 'confirmed',
     summary: 'Beach time',
     start: {
       dateTime: '2017-10-05T11:30:00+02:00',
@@ -35,6 +48,7 @@ describe('CalendarService', () => {
   };
 
   const all_day_event = {
+    responseStatus: 'confirmed',
    "start": {
     "date": "2017-10-02"
    },
@@ -44,6 +58,7 @@ describe('CalendarService', () => {
   };
 
   const all_day_event_with_time = {
+    responseStatus: 'confirmed',
    "start": {
     "dateTime": "2017-10-08T18:00:00+02:00"
    },
@@ -53,6 +68,7 @@ describe('CalendarService', () => {
  };
 
   const normal_event =   {
+    responseStatus: 'confirmed',
    "start": {
     "dateTime": "2017-10-13T10:15:00+02:00"
    },
@@ -94,6 +110,14 @@ describe('CalendarService', () => {
     },
   };
 
+  const RESPONSE_REJECTED_EVENT = {
+    body:
+    {
+      summary: 'cpania@thoughtworks.com',
+      "items": [ morning_rejected_event ],
+    },
+  };
+
 const RESPONSE_ALL_DAY_EVENT_OVERLAP = {
     body:
     {
@@ -111,6 +135,21 @@ const RESPONSE_ALL_DAY_EVENT_OVERLAP = {
   };
   test('test basic no event in calendar response', (done) => {
     require('superagent').__setMockResponse(RESPONSE_WITHOUT_EVENT);
+
+    CalendarService.requestAvailability('token', moment(queryStart), moment(queryEnd), duration, ['cpania@thoughtworks.com']).then((slots) => {
+      expect(slots).toEqual([{
+        email: 'cpania@thoughtworks.com',
+        data: [{
+          start: queryStart,
+          end: queryEnd,
+        }],
+      }]);
+      done();
+    });
+  });
+
+  test('test free slot when event is rejected', (done) => {
+    require('superagent').__setMockResponse(RESPONSE_REJECTED_EVENT);
 
     CalendarService.requestAvailability('token', moment(queryStart), moment(queryEnd), duration, ['cpania@thoughtworks.com']).then((slots) => {
       expect(slots).toEqual([{
