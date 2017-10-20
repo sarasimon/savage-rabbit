@@ -11,7 +11,7 @@ const positiveResponse = (attendees, email) => {
   let hasPositiveResponse = true;
   attendees.forEach((attendee) => {
     if (attendee.email === email) {
-      hasPositiveResponse = attendee.responseStatus !== 'accepted' || attendee.responseStatus === 'needsAction';
+      hasPositiveResponse = attendee.responseStatus !== 'declined';
     }
   },
   );
@@ -20,7 +20,7 @@ const positiveResponse = (attendees, email) => {
 
 const processAvailabilityRequest = (events, email, start, end, duration) => {
   const confirmedEvents =
-   events.filter(event =>
+   events.filter(event => // TODO: THIS NEEDS A REFACTOR
      (!event.attendees && (event.responseStatus === 'confirmed' || event.responseStatus === 'needsAction')) ||
     (event.attendees && positiveResponse(event.attendees, email)));
 
