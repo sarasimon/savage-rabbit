@@ -11,7 +11,7 @@ const positiveResponse = (attendees, email) => {
   let hasPositiveResponse = true;
   attendees.forEach((attendee) => {
         if(attendee.email === email){
-          hasPositiveResponse = attendee.responseStatus === 'accepted' || attendee.responseStatus === 'needsAction'
+          hasPositiveResponse = attendee.responseStatus === 'accepted' // only counts as busy people who have accepted the invite
        }
       }
   )
