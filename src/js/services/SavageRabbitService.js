@@ -26,6 +26,6 @@ const requestFreeSlots =
       const merged = _.map(people, item => _.assign(item, _.find(freeSlots, ['email', item.email])))
         .filter(person => person.data.length > 0);
       return _.reverse(_.sortBy(merged, ['level']));
-    });
+    })
 
 export default requestFreeSlots;

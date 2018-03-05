@@ -22,8 +22,8 @@ const processAvailabilityRequest = (events, email, start, end, duration) => {
   
   const confirmedEvents = 
    events.filter(event => 
-    !event.attendees && (event.responseStatus === 'confirmed' || event.responseStatus === 'needsAction') || 
-    event.attendees && positiveResponse(event.attendees, email))
+    !event.attendees || event.attendees && positiveResponse(event.attendees, email))
+  // console.log(events)  
 
   const eventsTime = confirmedEvents.map(event => convertEventDateToDatetime(event));
   const minuteDuration = duration.minute() + (duration.hour() * 60);
@@ -83,7 +83,8 @@ const requestInterviewsPerPerson = (token, interviewDate) => {
           resolve(countEventsPerPerson(res.body.items));
         }
       });
-  });
+  })
+  ;
 };
 
 const requestSingleAvailability = (token, workingDayStart, workingDayEnd,
@@ -102,20 +103,15 @@ const requestSingleAvailability = (token, workingDayStart, workingDayEnd,
       .query({ timeMin: start })
       .query({ timeMax: end })
       .end((err, res) => {
-        if (err) {
-          reject(err);
-        } else {
           resolve({
             email,
-            data: processRequestFunct(res.body.items, res.body.summary, start, end, interviewDuration),
+            data: err ? [] : processRequestFunct(res.body.items, res.body.summary, start, end, interviewDuration),
           });
-        }
       });
   });
 };
 
-const requestAvailability = ((token, workingDayStart, workingDayEnd,
-  interviewDuration, listOfEmails) => {
+const requestAvailability = ((token, workingDayStart, workingDayEnd, interviewDuration, listOfEmails) => {
   const promises = listOfEmails.map(email => requestSingleAvailability(
     token, workingDayStart, workingDayEnd, interviewDuration, email, processAvailabilityRequest));
   return Promise.all(promises);
