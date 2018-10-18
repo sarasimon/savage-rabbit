@@ -10,19 +10,18 @@ require('twix');
 const positiveResponse = (attendees, email) => {
   let hasPositiveResponse = true;
   attendees.forEach((attendee) => {
-        if(attendee.email === email){
-          hasPositiveResponse = attendee.responseStatus === 'accepted' // only counts as busy people who have accepted the invite
-       }
-      }
-  )
+    if (attendee.email === email) {
+      hasPositiveResponse = attendee.responseStatus === 'accepted'; // only counts as busy people who have accepted the invite
+    }
+  },
+  );
   return hasPositiveResponse;
 };
 
 const processAvailabilityRequest = (events, email, start, end, duration) => {
-  
-  const confirmedEvents = 
-   events.filter(event => 
-    !event.attendees || event.attendees && positiveResponse(event.attendees, email))
+  const confirmedEvents =
+   events.filter(event =>
+     !event.attendees || event.attendees && positiveResponse(event.attendees, email));
   // console.log(events)  
 
   const eventsTime = confirmedEvents.map(event => convertEventDateToDatetime(event));
@@ -103,10 +102,10 @@ const requestSingleAvailability = (token, workingDayStart, workingDayEnd,
       .query({ timeMin: start })
       .query({ timeMax: end })
       .end((err, res) => {
-          resolve({
-            email,
-            data: err ? [] : processRequestFunct(res.body.items, res.body.summary, start, end, interviewDuration),
-          });
+        resolve({
+          email,
+          data: err ? [] : processRequestFunct(res.body.items, res.body.summary, start, end, interviewDuration),
+        });
       });
   });
 };
